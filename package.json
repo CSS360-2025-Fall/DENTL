@@ -1,8 +1,8 @@
 {
-  "name": "discord-getting-started",
+  "name": "dentl",
   "private": true,
   "version": "1.0.0",
-  "description": "Discord example app",
+  "description": "Discord test app",
   "main": "app.js",
   "type": "module",
   "engines": {
@@ -13,7 +13,7 @@
     "register": "node commands.js",
     "dev": "nodemon app.js"
   },
-  "author": "Shay DeWael",
+  "author": "DENTL Team",
   "license": "MIT",
   "dependencies": {
     "discord-interactions": "^4.0.0",
@@ -22,5 +22,9 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.0"
-  }
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "keywords": []
 }
