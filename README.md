@@ -12,10 +12,13 @@
 * Horse Race
 * Memory
 * High or Low
+* Liars Dice/Card
+* Loot Box
 
 Extras:
 * Scratch Ticket
 * Roulette
+* Shell Game
 * Russian Roulette
 
 ## Features
@@ -25,3 +28,4 @@ Extras:
 * The Mafia
 * Achievements
 * Banks/Debt
+* Credit Factory
