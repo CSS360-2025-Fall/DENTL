@@ -85,7 +85,21 @@ const GRANTITEM = {
   ],
 };
 
-const commands = [RPS, COINFLIP, BALANCE, INVENTORY, GRANT, GRANTITEM];
+const RUSSIANROULETTE = {
+  name: "russianroulette",
+  description: "Play the odds.",
+  type: 1,
+};
+
+const commands = [
+  RPS,
+  COINFLIP,
+  BALANCE,
+  INVENTORY,
+  GRANT,
+  GRANTITEM,
+  RUSSIANROULETTE,
+];
 
 async function registerCommands() {
   const { APP_ID, GUILD_ID, IN_DEV } = process.env;
