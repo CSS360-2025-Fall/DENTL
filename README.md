@@ -3,10 +3,10 @@
 ## Description:
 
 ## Games:
-* Rock, Paper, Scissors
+* Rock, Paper, Scissors ✅
 * Blackjack
 * Poker
-* Coin Flip
+* Coin Flip ✅
 * Slots
 * Lottery
 * Horse Race
@@ -19,7 +19,7 @@ Extras:
 * Scratch Ticket
 * Roulette
 * Shell Game
-* Russian Roulette
+* Russian Roulette ✅
 
 ## Features
 * Leaderboards
@@ -29,3 +29,18 @@ Extras:
 * Achievements
 * Banks/Debt
 * Credit Factory
+
+
+### Notes:
+Needs SQLite -> npm i better-sqlite3
+ENV file adjustments: 
+* GUILD_ID -> Server ID. Get from "Copy Server ID" upon right click.
+* ADMIN_IDS -> Allows access to cheat commands. This is a list, so you can add your user ID after a comma.
+* IN_DEV -> Leave as true until the end. This allows for faster reloading of commands on servers, but applies ONLY to said servers.
+
+If you can't get Server/User IDs from Discord, navigate to Settings->App Settings->Advanced->Developer Mode.
+
+### Running:
+1. npm run register
+2. npm run start
+3. ngrok http 3000
