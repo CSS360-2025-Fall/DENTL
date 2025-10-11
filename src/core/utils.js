@@ -60,3 +60,26 @@ export function getRandomEmoji() {
 export function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export async function InstallGuildCommands(appId, guildId, commands) {
+  const endpoint = `applications/${appId}/guilds/${guildId}/commands`;
+  await DiscordRequest(endpoint, { method: "PUT", body: commands });
+}
+
+export async function ClearGlobalCommands(appId) {
+  const endpoint = `applications/${appId}/commands`;
+  await DiscordRequest(endpoint, { method: "PUT", body: [] });
+}
+
+export async function ClearGuildCommands(appId, guildId) {
+  const endpoint = `applications/${appId}/guilds/${guildId}/commands`;
+  await DiscordRequest(endpoint, { method: "PUT", body: [] });
+}
+
+export function isAdmin(userId) {
+  const list = (process.env.ADMIN_IDS ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  return list.includes(String(userId));
+}
