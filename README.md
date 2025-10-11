@@ -36,7 +36,7 @@ Needs SQLite -> npm i better-sqlite3
 
 ENV file adjustments: 
 * GUILD_ID -> Server ID. Get from "Copy Server ID" upon right click.
-* ADMIN_IDS -> Allows access to cheat commands. This is a list, so you can add your user ID after a comma.
+* ADMIN_IDS -> Allows access to cheat commands. This is a list, so you can add your user ID after a comma. This should already be set.
 * IN_DEV -> Leave as true until the end. This allows for faster reloading of commands on servers, but applies ONLY to said servers.
 
 If you can't get Server/User IDs from Discord, navigate to Settings->App Settings->Advanced->Developer Mode.
