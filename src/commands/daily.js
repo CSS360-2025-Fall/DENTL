@@ -14,9 +14,6 @@ function fmtHMS(ms) {
 export async function execute(interaction) {
   const ctx = interaction.context; // 0=guild,1=bot DM,2=user DM
   const userId = ctx === 0 ? interaction.member.user.id : interaction.user.id;
-  /*
-  const base = Number(process.env.DAILY_BASE ?? 1000) | 0; // default 1000
-  const cap = Number(process.env.DAILY_MAX_STREAK ?? 5) | 0; // default 5*/
 
   const { base, cap } = GameConfig.daily;
 
