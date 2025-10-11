@@ -33,6 +33,7 @@ Extras:
 
 ### Notes:
 Needs SQLite -> npm i better-sqlite3
+
 ENV file adjustments: 
 * GUILD_ID -> Server ID. Get from "Copy Server ID" upon right click.
 * ADMIN_IDS -> Allows access to cheat commands. This is a list, so you can add your user ID after a comma.
