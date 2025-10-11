@@ -91,6 +91,17 @@ const RUSSIANROULETTE = {
   type: 1,
 };
 
+const DAILY = {
+  name: "daily",
+  description: "Claim your daily credits (with streak)",
+  type: 1,
+};
+const FREEBIE = {
+  name: "freebie",
+  description: "Grab a small freebie (1h cooldown)",
+  type: 1,
+};
+
 const commands = [
   RPS,
   COINFLIP,
@@ -99,6 +110,8 @@ const commands = [
   GRANT,
   GRANTITEM,
   RUSSIANROULETTE,
+  DAILY,
+  FREEBIE,
 ];
 
 async function registerCommands() {
