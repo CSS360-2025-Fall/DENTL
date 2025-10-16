@@ -7,6 +7,25 @@ import {
   ClearGlobalCommands,
 } from "./utils.js";
 
+const RULES  = {
+  name: "rule",
+  description: "Get the rules for a game",
+  type: 1,
+  options: [
+    {
+      type: 3,
+      name: "game",
+      description: "Game type (e.g., rps)",
+      required: true,
+      choices: [
+        { name: "rps", value: "rps" },
+        { name: "coinflip", value: "coinflip" },
+        { name: "russianroulette", value: "russianroulette" }  
+      ],
+    },
+  ],
+};
+    
 const RPS = {
   name: "rps",
   description: "Play rock-paper-scissors vs the bot",
@@ -103,6 +122,7 @@ const FREEBIE = {
 };
 
 const commands = [
+  RULES,
   RPS,
   COINFLIP,
   BALANCE,
