@@ -29,22 +29,29 @@ const RULES  = {
 const RPS = {
   name: "rps",
   description: "Play rock-paper-scissors vs the bot",
+  name_localizations: { ja: "じゃんけん" },
+  description_localizations: { ja: "ボットとじゃんけんで勝負" },
   type: 1,
   options: [
     {
       type: 3,
       name: "choice",
       description: "rock, paper, or scissors",
+      name_localizations: { ja: "手" },
+      description_localizations: { ja: "グー・パー・チョキのいずれか" },
       required: true,
-      choices: ["rock", "paper", "scissors"].map((c) => ({
-        name: c,
-        value: c,
-      })),
+      choices: [
+        { name: "Rock",     value: "rock",     name_localizations: { ja: "グー" } },
+        { name: "Paper",    value: "paper",    name_localizations: { ja: "パー" } },
+        { name: "Scissors", value: "scissors", name_localizations: { ja: "チョキ" } },
+      ],
     },
     {
       type: 4,
       name: "bet",
       description: "bet amount (optional)",
+      name_localizations: { ja: "ベット" },
+      description_localizations: { ja: "任意のベット額" },
       required: false,
     },
   ],
@@ -122,6 +129,7 @@ const FREEBIE = {
 };
 
 const commands = [
+  LANG,
   RULES,
   RPS,
   COINFLIP,
