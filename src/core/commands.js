@@ -7,28 +7,25 @@ import {
   ClearGlobalCommands,
 } from "./utils.js";
 
-const LANG = {
-  name: "lang",
-  description: "Set your language",
-  name_localizations: { ja: "言語" },
-  description_localizations: { ja: "使用言語を設定" },
+const RULES  = {
+  name: "rule",
+  description: "Get the rules for a game",
   type: 1,
   options: [
     {
-      type: 3, // STRING
-      name: "value",
-      description: "Language (en or ja)",
-      name_localizations: { ja: "値" },
-      description_localizations: { ja: "言語（en または ja）" },
+      type: 3,
+      name: "game",
+      description: "Game type (e.g., rps)",
       required: true,
       choices: [
-        { name: "English", value: "en", name_localizations: { ja: "英語" } },
-        { name: "日本語",  value: "ja", name_localizations: { ja: "日本語" } },
+        { name: "rps", value: "rps" },
+        { name: "coinflip", value: "coinflip" },
+        { name: "russianroulette", value: "russianroulette" }  
       ],
     },
   ],
 };
-
+    
 const RPS = {
   name: "rps",
   description: "Play rock-paper-scissors vs the bot",
@@ -133,6 +130,7 @@ const FREEBIE = {
 
 const commands = [
   LANG,
+  RULES,
   RPS,
   COINFLIP,
   BALANCE,
