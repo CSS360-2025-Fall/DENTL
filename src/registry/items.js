@@ -4,7 +4,7 @@ export const ITEMS = [
   {
     code: "ru",
     name: "Raw Uranium",
-    flavor: "",
+    flavor: "How did you even get this?",
     type: "sellable",
     sell: 100000,
     enabled: true,
@@ -12,7 +12,7 @@ export const ITEMS = [
   {
     code: "sr",
     name: "Shiny Rock",
-    flavor: "",
+    flavor: "Looks pretty valuable.",
     type: "sellable",
     sell: 2500,
     enabled: true,
