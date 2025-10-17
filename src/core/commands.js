@@ -7,25 +7,73 @@ import {
   ClearGlobalCommands,
 } from "./utils.js";
 
+const LANG = {
+  name: "lang",
+  description: "Set your language",
+  name_localizations: { ja: "言語" },
+  description_localizations: { ja: "使用言語を設定" },
+  type: 1,
+  options: [
+    {
+      type: 3, // STRING
+      name: "value",
+      description: "Language (en or ja)",
+      name_localizations: { ja: "値" },
+      description_localizations: { ja: "言語（en または ja）" },
+      required: true,
+      choices: [
+        { name: "English", value: "en", name_localizations: { ja: "英語" } },
+        { name: "日本語",  value: "ja", name_localizations: { ja: "日本語" } },
+      ],
+    },
+  ],
+};
+
+const RULES  = {
+  name: "rule",
+  description: "Get the rules for a game",
+  type: 1,
+  options: [
+    {
+      type: 3,
+      name: "game",
+      description: "Game type (e.g., rps)",
+      required: true,
+      choices: [
+        { name: "rps", value: "rps" },
+        { name: "coinflip", value: "coinflip" },
+        { name: "russianroulette", value: "russianroulette" }  
+      ],
+    },
+  ],
+};
+    
 const RPS = {
   name: "rps",
   description: "Play rock-paper-scissors vs the bot",
+  name_localizations: { ja: "じゃんけん" },
+  description_localizations: { ja: "ボットとじゃんけんで勝負" },
   type: 1,
   options: [
     {
       type: 3,
       name: "choice",
       description: "rock, paper, or scissors",
+      name_localizations: { ja: "手" },
+      description_localizations: { ja: "グー・パー・チョキのいずれか" },
       required: true,
-      choices: ["rock", "paper", "scissors"].map((c) => ({
-        name: c,
-        value: c,
-      })),
+      choices: [
+        { name: "Rock",     value: "rock",     name_localizations: { ja: "グー" } },
+        { name: "Paper",    value: "paper",    name_localizations: { ja: "パー" } },
+        { name: "Scissors", value: "scissors", name_localizations: { ja: "チョキ" } },
+      ],
     },
     {
       type: 4,
       name: "bet",
       description: "bet amount (optional)",
+      name_localizations: { ja: "ベット" },
+      description_localizations: { ja: "任意のベット額" },
       required: false,
     },
   ],
@@ -103,6 +151,8 @@ const FREEBIE = {
 };
 
 const commands = [
+  LANG,
+  RULES,
   RPS,
   COINFLIP,
   BALANCE,
