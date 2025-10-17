@@ -150,6 +150,19 @@ const FREEBIE = {
   type: 1,
 };
 
+const JOKE = {
+  name: "joke",
+  description: "get a random joke",
+  type: 1,
+};
+const QUOTE = {
+  name: "quote",
+  description: "get a random quote",
+  type: 1,
+};
+
+
+
 const commands = [
   LANG,
   RULES,
@@ -162,6 +175,8 @@ const commands = [
   RUSSIANROULETTE,
   DAILY,
   FREEBIE,
+  JOKE,
+  QUOTE,
 ];
 
 async function registerCommands() {
