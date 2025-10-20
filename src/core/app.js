@@ -9,6 +9,9 @@ import {
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { tickAllStocks } from "../economy/stocks.js";
+import { GameConfig } from "../config/gameConfig.js";
+import { stock_prune_by_age } from "../economy/db.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,3 +65,21 @@ app.post(
 );
 
 app.listen(PORT, () => console.log(`🚀 Listening on :${PORT}`));
+
+const MIN = 60 * 1000;
+setInterval(() => {
+  try {
+    tickAllStocks();
+  } catch (e) {
+    console.error("Error ticking stocks:", e);
+  }
+}, (GameConfig.stocks.stockTick || 5) * MIN);
+
+setInterval(() => {
+  try {
+    const removed = stock_prune_by_age(7);
+    if (removed) console.log(`🗑️ pruned ${removed} old stock rows`);
+  } catch (e) {
+    console.error("Prune error:", e);
+  }
+}, 6 * 60 * 60 * 1000); // every 6 hours

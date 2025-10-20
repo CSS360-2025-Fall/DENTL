@@ -6,6 +6,8 @@ import {
   ClearGuildCommands,
   ClearGlobalCommands,
 } from "./utils.js";
+import { ITEMS } from "../registry/items.js";
+import { STOCKS as STOCK_REG } from "../registry/stocks.js";
 
 const LANG = {
   name: "lang",
@@ -23,13 +25,13 @@ const LANG = {
       required: true,
       choices: [
         { name: "English", value: "en", name_localizations: { ja: "英語" } },
-        { name: "日本語",  value: "ja", name_localizations: { ja: "日本語" } },
+        { name: "日本語", value: "ja", name_localizations: { ja: "日本語" } },
       ],
     },
   ],
 };
 
-const RULES  = {
+const RULES = {
   name: "rule",
   description: "Get the rules for a game",
   type: 1,
@@ -42,12 +44,12 @@ const RULES  = {
       choices: [
         { name: "rps", value: "rps" },
         { name: "coinflip", value: "coinflip" },
-        { name: "russianroulette", value: "russianroulette" }  
+        { name: "russianroulette", value: "russianroulette" },
       ],
     },
   ],
 };
-    
+
 const RPS = {
   name: "rps",
   description: "Play rock-paper-scissors vs the bot",
@@ -63,9 +65,13 @@ const RPS = {
       description_localizations: { ja: "グー・パー・チョキのいずれか" },
       required: true,
       choices: [
-        { name: "Rock",     value: "rock",     name_localizations: { ja: "グー" } },
-        { name: "Paper",    value: "paper",    name_localizations: { ja: "パー" } },
-        { name: "Scissors", value: "scissors", name_localizations: { ja: "チョキ" } },
+        { name: "Rock", value: "rock", name_localizations: { ja: "グー" } },
+        { name: "Paper", value: "paper", name_localizations: { ja: "パー" } },
+        {
+          name: "Scissors",
+          value: "scissors",
+          name_localizations: { ja: "チョキ" },
+        },
       ],
     },
     {
@@ -161,7 +167,104 @@ const QUOTE = {
   type: 1,
 };
 
+const SELL_CHOICES = ITEMS.filter(
+  (i) => i.enabled !== false && typeof i.sell === "number" && i.sell > 0
+)
+  .slice(0, 25)
+  .map((i) => ({ name: i.name, value: i.code })); // pass short code like "sr", "sc", "ff"
 
+const SELL = {
+  name: "sell",
+  description: "Sell a sellable item from your inventory for credits",
+  type: 1, // CHAT_INPUT
+  options: [
+    {
+      type: 3, // STRING
+      name: "code",
+      description: "Item to sell (pick from the list)",
+      required: true,
+      choices: SELL_CHOICES, // e.g., "Shiny Rock" -> "sr"
+    },
+    {
+      type: 4, // INTEGER
+      name: "qty",
+      description: "Quantity to sell (defaults to 1)",
+      required: false,
+    },
+  ],
+};
+
+const STOCK_CHOICES = STOCK_REG.filter((s) => s.enabled !== false)
+  .slice(0, 25)
+  .map((s) => ({ name: `${s.name} (${s.symbol})`, value: s.symbol }));
+
+const STOCKS = {
+  name: "stocks",
+  description: "View/buy/sell stocks",
+  type: 1,
+  options: [
+    {
+      type: 1,
+      name: "list",
+      description: "List all stocks and current prices",
+    },
+    {
+      type: 1,
+      name: "buy",
+      description: "Buy shares at current price",
+      options: [
+        {
+          type: 3,
+          name: "symbol",
+          description: "Stock symbol",
+          required: true,
+          choices: STOCK_CHOICES,
+        },
+        {
+          type: 4,
+          name: "qty",
+          description: "Quantity (default 1)",
+          required: false,
+        },
+      ],
+    },
+    {
+      type: 1,
+      name: "sell",
+      description: "Sell shares at current price",
+      options: [
+        {
+          type: 3,
+          name: "symbol",
+          description: "Stock symbol",
+          required: true,
+          choices: STOCK_CHOICES,
+        },
+        {
+          type: 4,
+          name: "qty",
+          description: "Quantity (default 1)",
+          required: false,
+        },
+      ],
+    },
+    { type: 1, name: "stats", description: "Admin: show stock states & turns" },
+    {
+      type: 1,
+      name: "reset",
+      description: "Admin: reset one stock or all to baseline",
+      options: [
+        {
+          type: 3,
+          name: "symbol",
+          description: "Stock symbol (omit to reset ALL)",
+          required: false,
+          choices: STOCK_CHOICES,
+        },
+      ],
+    },
+  ],
+};
 
 const commands = [
   LANG,
@@ -177,6 +280,8 @@ const commands = [
   FREEBIE,
   JOKE,
   QUOTE,
+  SELL,
+  STOCKS,
 ];
 
 async function registerCommands() {
