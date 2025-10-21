@@ -22,12 +22,8 @@ export async function execute(interaction) {
   if (sub.name === "list") {
     const arr = listCurrentStocks();
     const body =
-      arr
-        .map(
-          (s) =>
-            `• **${s.name}** (${s.symbol}) — **${s.price}** [baseline ${s.baseline}]`
-        )
-        .join("\n") || "No stocks configured.";
+      arr.map((s) => `• **${s.name}** — **$${s.price}**`).join("\n") ||
+      "No stocks configured.";
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: { content: body },
@@ -99,7 +95,7 @@ export async function execute(interaction) {
           (s) =>
             `• **${s.name}** (${s.symbol}) — **${s.price}** • ${
               states[s.stateId] ?? "—"
-            } (${s.turnsLeft} turns)`
+            } (${s.turnsLeft} turns) [baseline ${s.baseline}]`
         )
         .join("\n") || "No stocks.";
     return {

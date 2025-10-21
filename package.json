@@ -1,7 +1,7 @@
 {
   "name": "dentl",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A CSS360 Gambling bot.",
   "main": "app.js",
   "type": "module",

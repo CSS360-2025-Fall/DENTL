@@ -16,7 +16,7 @@ export const GameConfig = {
     startingBalance: 0,
   },
   stocks: {
-    stockTick: 5, //minutes before the stock prices update
+    stockTick: 1, //minutes before the stock prices update
 
     baselineBias: 20, //percent above/below baseline to favor returning to baseline
 
