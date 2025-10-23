@@ -17,6 +17,8 @@ Commands folder contains the individual implementation for each command features
 When the bot is running, the core system (app.js and commands.js) listens for incoming interactions, determines which command was requested, and loads the corresponding file from the "commands" folder. With this file configuration, the core folder acts as the command loader and central hub, while the commands folder hosts the plug-in logics for each specific feature.
 
 ## Project File Structure
+
+```
 ├── .vscode -> vscode styling settings
 ├── assets -> global assets
 ├── data -> global localized languages for DENTL-BOT
@@ -37,6 +39,7 @@ When the bot is running, the core system (app.js and commands.js) listens for in
 ├── package-lock.json 
 ├── package.json
 └── renovate.json
+```
 
 # Database
 Overview:
@@ -96,4 +99,5 @@ Stock
 
 ## Economy
 The database accepts bets from the users, by first deducting their bet from the user's account, by providing addBalance with a negative value, then subsequently adding either 0, 1, or 2 times their bet on a lose, tie, or win respectively. 
+
 
