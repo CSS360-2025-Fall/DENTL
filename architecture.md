@@ -6,7 +6,7 @@ Elijah - Project File Structure Diagram
 
 Dan - Systems Diagram (Ngrok)
 
-Levon - 
+Levon - The purpose of the website is to introduce users to the DENTL Discord bot and provide clear, accessible information about its features and functionality. It serves as a hub where users can learn how DENTL works, access game rules, and find links to invite the bot to their own Discord servers. The site also includes options to change the display language and explore different game modes, making it easier for users to navigate and engage with the bot. In the future, the website may expand to include more interactive features, such as stock trading, user leaderboards, blackjack, poker, or jokes that enhance the overall experience and showcase updates or new features of DENTL.
 
 
 relationship between files in "core" folder and "commands" folder:
@@ -99,5 +99,6 @@ Stock
 
 ## Economy
 The database accepts bets from the users, by first deducting their bet from the user's account, by providing addBalance with a negative value, then subsequently adding either 0, 1, or 2 times their bet on a lose, tie, or win respectively. 
+
 
 
