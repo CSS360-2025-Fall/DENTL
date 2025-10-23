@@ -16,6 +16,28 @@ Commands folder contains the individual implementation for each command features
 
 When the bot is running, the core system (app.js and commands.js) listens for incoming interactions, determines which command was requested, and loads the corresponding file from the "commands" folder. With this file configuration, the core folder acts as the command loader and central hub, while the commands folder hosts the plug-in logics for each specific feature.
 
+## Project File Structure
+├── .vscode -> vscode styling settings
+├── assets -> global assets
+├── data -> global localized languages for DENTL-BOT
+├── examples -> previous discord bot examples
+├── src
+│   ├── commands -> holds respective game logics
+│  	├── config -> game configuration
+│   ├── core -> app, utils, register bot commands
+│   ├── data -> SQLite, Jokes, Quotes
+│   ├── economy -> stocks, bets, Database logic
+│   ├── events -> interactions, events
+│   ├── games/rps -> game rules
+│   └── registry -> registry logic
+├── .env -> passwords, keys, private file
+├── .gitignore
+├── README.md -> project description
+├── architecture.md -> project architecture description
+├── package-lock.json 
+├── package.json
+└── renovate.json
+
 # Database
 Overview:
 This module provides a local datastore for the in-game economy. It deals _ handling balances, inventory, daily claims, freebies, and stock history.
@@ -74,3 +96,4 @@ Stock
 
 ## Economy
 The database accepts bets from the users, by first deducting their bet from the user's account, by providing addBalance with a negative value, then subsequently adding either 0, 1, or 2 times their bet on a lose, tie, or win respectively. 
+
