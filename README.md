@@ -23,7 +23,7 @@ Extras:
 
 ## Features
 * Leaderboards
-* Daily Log-In Reward
+* Daily Log-In Reward ✅
 * Challenge Player
 * The Mafia
 * Achievements
@@ -31,7 +31,7 @@ Extras:
 * Credit Factory
 * Copyright
     * Players can purchase copyrights for words, forcing others to pay credits when they use them.
-* Stock Market
+* Stock Market ✅
     * Players can place money on stocks, which will change in value hourly.
   
 
