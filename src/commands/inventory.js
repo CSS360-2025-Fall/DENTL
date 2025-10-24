@@ -1,5 +1,7 @@
+// src/commands/inventory.js
 import { InteractionResponseType } from "discord-interactions";
 import { getInventory } from "../economy/db.js";
+import { displayName } from "../registry/index.js";
 
 export async function execute(interaction) {
   const ctx = interaction.context;
@@ -7,7 +9,7 @@ export async function execute(interaction) {
 
   const items = getInventory(userId);
   const pretty = items.length
-    ? items.map((i) => `• ${i.item_code} × ${i.qty}`).join("\n")
+    ? items.map((i) => `• ${displayName(i.item_code)} × ${i.qty}`).join("\n")
     : "— empty —";
 
   return {

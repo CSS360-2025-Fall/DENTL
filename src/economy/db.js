@@ -38,6 +38,17 @@ function initSchema() {
       user_id TEXT PRIMARY KEY,
       last_freebie INTEGER NOT NULL  -- ms epoch UTC
     );
+
+    CREATE TABLE IF NOT EXISTS stock_prices (
+      symbol      TEXT NOT NULL,       -- e.g. 'cc', 'dc', 'bod', ...
+      ts          INTEGER NOT NULL,    -- ms epoch
+      price       INTEGER NOT NULL,    -- credits, ≥1
+      state_id    INTEGER NOT NULL,    -- 0..7
+      turns_left  INTEGER NOT NULL,    -- >=0
+      PRIMARY KEY (symbol, ts)
+    );
+    CREATE INDEX IF NOT EXISTS idx_stock_prices_symbol_ts ON stock_prices(symbol, ts);
+
   `);
 }
 initSchema();
@@ -199,4 +210,35 @@ export function claimFreebie(
   });
   const newBal = tx(userId, amount | 0, now);
   return { ok: true, waitMs: 0, amount: amount | 0, newBalance: newBal };
+}
+
+// ----- STOCK HISTORY HELPERS -----
+const sp_latest = db.prepare(
+  `SELECT symbol, ts, price, state_id, turns_left
+   FROM stock_prices WHERE symbol=? ORDER BY ts DESC LIMIT 1`
+);
+const sp_insert = db.prepare(
+  `INSERT OR REPLACE INTO stock_prices (symbol, ts, price, state_id, turns_left)
+   VALUES (?, ?, ?, ?, ?)`
+);
+const sp_recent = db.prepare(
+  `SELECT symbol, ts, price, state_id, turns_left
+   FROM stock_prices WHERE symbol=? ORDER BY ts DESC LIMIT ?`
+);
+
+export function stock_latest(symbol) {
+  return sp_latest.get(symbol) || null;
+}
+export function stock_write(symbol, ts, price, stateId, turnsLeft) {
+  sp_insert.run(symbol, ts, price, stateId, turnsLeft);
+}
+export function stock_history(symbol, limit = 100) {
+  return sp_recent.all(symbol, limit);
+}
+
+const sp_prune_age = db.prepare(`DELETE FROM stock_prices WHERE ts < ?`);
+
+export function stock_prune_by_age(days = 7) {
+  const cutoff = Date.now() - days * 86400000;
+  return sp_prune_age.run(cutoff).changes;
 }
