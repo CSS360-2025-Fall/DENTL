@@ -7,6 +7,20 @@ import {
   ClearGlobalCommands,
 } from "./utils.js";
 
+const BLACKJACK = {
+  name: "blackjack",
+  description: "Play blackjack against the bot",
+  type: 1,
+  options: [
+    {
+      type: 4,
+      name: "bet",
+      description: "bet amount (mandatory)",
+      required: true,
+    },
+  ],
+};
+
 const LANG = {
   name: "lang",
   description: "Set your language",
@@ -151,6 +165,7 @@ const FREEBIE = {
 };
 
 const commands = [
+  BLACKJACK,
   LANG,
   RULES,
   RPS,
