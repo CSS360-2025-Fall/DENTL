@@ -1,0 +1,75 @@
+// Item codes are short and immutable.
+export const ITEMS = [
+  // sellables
+  {
+    code: "ru",
+    name: "Raw Uranium",
+    flavor: "How did you even get this?",
+    type: "sellable",
+    sell: 100000,
+    enabled: true,
+  },
+  {
+    code: "sr",
+    name: "Shiny Rock",
+    flavor: "Looks pretty valuable.",
+    type: "sellable",
+    sell: 2500,
+    enabled: true,
+  },
+  {
+    code: "ro",
+    name: "Rock",
+    flavor: "It's a rock.",
+    type: "sellable",
+    sell: 50,
+    enabled: true,
+  },
+
+  // consumables
+  {
+    code: "sc",
+    name: "Safety Chip",
+    flavor: "",
+    type: "consumable",
+    sell: 10000,
+    effect: "next_loss_protect",
+    enabled: true,
+  },
+  {
+    code: "ff",
+    name: "Fortune's Favor",
+    flavor: "",
+    type: "consumable",
+    sell: 10000,
+    effect: "next_win_double",
+    enabled: true,
+  },
+  {
+    code: "ld",
+    name: "Lucky Dice",
+    flavor: "",
+    type: "consumable",
+    sell: 10000,
+    effect: "next_win_bias",
+    enabled: true,
+  },
+  {
+    code: "mv",
+    name: "Market Voucher",
+    flavor: "The market's volatile. Get an expert's opinion.",
+    type: "special",
+    sell: 5000,
+    effect: "show_market_states",
+    enabled: true,
+  },
+  {
+    code: "pc",
+    name: "Pocket Cards",
+    flavor: "",
+    type: "special",
+    sell: 8000,
+    effect: "custom_card",
+    enabled: true,
+  },
+];
