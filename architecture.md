@@ -41,6 +41,7 @@ When the bot is running, the core system (app.js and commands.js) listens for in
 └── renovate.json
 ```
 
+
 # Database
 Overview:
 This module provides a local datastore for the in-game economy. It deals _ handling balances, inventory, daily claims, freebies, and stock history.
