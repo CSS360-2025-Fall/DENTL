@@ -9,6 +9,9 @@ Dan - Systems Diagram (Ngrok)
 Levon - The purpose of the website is to introduce users to the DENTL Discord bot and provide clear, accessible information about its features and functionality. It serves as a hub where users can learn how DENTL works, access game rules, and find links to invite the bot to their own Discord servers. The site also includes options to change the display language and explore different game modes, making it easier for users to navigate and engage with the bot. In the future, the website may expand to include more interactive features, such as stock trading, user leaderboards, blackjack, poker, or jokes that enhance the overall experience and showcase updates or new features of DENTL.
 
 
+## Systems Diagram
+
+<img width="1960" height="560" alt="Discord Bot Systems Architecture" src="https://github.com/user-attachments/assets/ef35986b-786f-449d-ae6f-41bd58143789" />
 
 ## Project File Structure
 
