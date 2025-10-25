@@ -9,12 +9,6 @@ Dan - Systems Diagram (Ngrok)
 Levon - The purpose of the website is to introduce users to the DENTL Discord bot and provide clear, accessible information about its features and functionality. It serves as a hub where users can learn how DENTL works, access game rules, and find links to invite the bot to their own Discord servers. The site also includes options to change the display language and explore different game modes, making it easier for users to navigate and engage with the bot. In the future, the website may expand to include more interactive features, such as stock trading, user leaderboards, blackjack, poker, or jokes that enhance the overall experience and showcase updates or new features of DENTL.
 
 
-relationship between files in "core" folder and "commands" folder:
-Core folder contains 4 files that are the code for the bot to function. i18n.js handles language settings for localization, utils.js contains the general helpers for Discord API calls and command registrations, commands.js declares all the list of commands the bot has, and the app.js sets up the bot's main logic like handling events and requests and routing the interactions and environment configs.
-
-Commands folder contains the individual implementation for each command features and actions. Each files exports an execute function which is triggered when a user uses that specific command.
-
-When the bot is running, the core system (app.js and commands.js) listens for incoming interactions, determines which command was requested, and loads the corresponding file from the "commands" folder. With this file configuration, the core folder acts as the command loader and central hub, while the commands folder hosts the plug-in logics for each specific feature.
 
 ## Project File Structure
 
@@ -41,6 +35,13 @@ When the bot is running, the core system (app.js and commands.js) listens for in
 └── renovate.json
 ```
 
+## Relationship between the commands and core folder under src folder
+
+Core folder contains 4 files that are the code for the bot to function. i18n.js handles language settings for localization, utils.js contains the general helpers for Discord API calls and command registrations, commands.js declares all the list of commands the bot has, and the app.js sets up the bot's main logic like handling events and requests and routing the interactions and environment configs.
+
+Commands folder contains the individual implementation for each command features and actions. Each files exports an execute function which is triggered when a user uses that specific command.
+
+When the bot is running, the core system (app.js and commands.js) listens for incoming interactions, determines which command was requested, and loads the corresponding file from the "commands" folder. With this file configuration, the core folder acts as the command loader and central hub, while the commands folder hosts the plug-in logics for each specific feature.
 
 # Database
 Overview:
