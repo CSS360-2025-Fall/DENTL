@@ -1,4 +1,4 @@
-Tyler - 
+Tyler - Potential Vulnerabilities and Leaderboards
 ## Potential Vulnerabilities:
 ### SQLite Database
 Our SQLite database is stored on github currently. Whenever the bot gets updated, the current database also gets dumped. 
@@ -16,3 +16,11 @@ As the bot requires unique tokens to run, we need to make sure they are kept sec
 malicious actors. We are currently dealing with this by having the tokens only exist in our personal workspaces, and our
 private group server, inside a .env file. We must make sure that .env remains on .gitignore to prevent these values from
 leaking.
+
+
+
+
+## Additional Features:
+### Leaderboards
+We want our bot to be able to display a leaderboard containing the top ten(?) wealthiest people on the system, as well as
+where the user calling it would rank upon the board.
