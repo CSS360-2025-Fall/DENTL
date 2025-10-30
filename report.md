@@ -2,6 +2,8 @@ Tyler - Potential Vulnerabilities and Leaderboards
 
 Nagato - Bugs from blackjack game and betting limit feature
 
+Levon - Limitations/Gaps in Features
+
 ## Potential Vulnerabilities:
 ### SQLite Database
 Our SQLite database is stored on github currently. Whenever the bot gets updated, the current database also gets dumped. 
@@ -34,3 +36,6 @@ where the user calling it would rank upon the board.
 
 ### Betting Limits
 Many of the real-world gambling settings have betting limits (so that casinos generates profit), and we vision our gambling bot to replicate the physical gambling environment. We hope that this feature would add more strategy to the gambling experience.
+
+## Limitations/Gaps in Features
+Some limitations or gaps in the features include the lack of player interaction depth. While you can challenge players, there’s no mention of tournaments, clans, or cooperative modes that could make competition more engaging. The economy system is also quite simple. Players earn daily credits and use them for games or stocks, but there’s no mention of saving, interest, or dynamic events that affect markets or rewards. Also, while DENTL does support multiple languages, it doesn’t mention customization options like changing difficulty levels or adding new games through user input. Also, a single "kick" command isn’t a the most engaging form of "playfulness". While DENTL includes features like achievements and leaderboards, it lacks progression systems such as ranks, levels, or long-term rewards that could motivate players to keep playing over time.
