@@ -4,6 +4,8 @@ Nagato - Bugs from blackjack game and betting limit feature
 
 Levon - Limitations/Gaps in Features
 
+Elijah - Threat Model Analysis 
+
 ## Potential Vulnerabilities:
 ### SQLite Database
 Our SQLite database is stored on github currently. Whenever the bot gets updated, the current database also gets dumped. 
@@ -39,3 +41,14 @@ Many of the real-world gambling settings have betting limits (so that casinos ge
 
 ## Limitations/Gaps in Features
 Some limitations or gaps in the features include the lack of player interaction depth. While you can challenge players, there’s no mention of tournaments, clans, or cooperative modes that could make competition more engaging. The economy system is also quite simple. Players earn daily credits and use them for games or stocks, but there’s no mention of saving, interest, or dynamic events that affect markets or rewards. Also, while DENTL does support multiple languages, it doesn’t mention customization options like changing difficulty levels or adding new games through user input. Also, a single "kick" command isn’t a the most engaging form of "playfulness". While DENTL includes features like achievements and leaderboards, it lacks progression systems such as ranks, levels, or long-term rewards that could motivate players to keep playing over time.
+
+## Threat Model Analysis
+
+### Denial of Service (DoS)
+Our current server architecture, which relies on an ngrok tunnel hosted exclusively on Tyler's PC, creates a critical single point of failure. This configuration inherently centralizes the project's operational integrity around one machine and its network connection. Consequently, this makes Tyler's system a high-value target for a Denial-of-Service (DoS) attack. A successful attack would not only disrupt the server's availability, disabling our bot's core functionality, but could also overwhelm the local system's resources, potentially causing stability issues or data corruption that would harm the bot's operation beyond a simple service interruption. This centralization poses a significant risk to the project's overall reliability and security
+
+### Repudiation
+The gambling nature of our bot introduces a significant risk of repudiation due to its handling of virtual currency. Without a secure and immutable ledger documenting every transaction, users could exploit this lack of accountability to discreetly engage in activities and later deny their losses. This vulnerability would allow them to fraudulently dispute settled bets, undermining the system's integrity. Therefore, implementing a robust audit trail is essential to enforce financial accountability and ensure the bot's operational legitimacy.
+
+
+
