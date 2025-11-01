@@ -6,6 +6,8 @@ Levon - Limitations/Gaps in Features
 
 Elijah - Threat Model Analysis 
 
+Dan - Static Analysis in Action
+
 ## Potential Vulnerabilities:
 ### SQLite Database
 Our SQLite database is stored on github currently. Whenever the bot gets updated, the current database also gets dumped. 
@@ -49,6 +51,15 @@ Our current server architecture, which relies on an ngrok tunnel hosted exclusiv
 
 ### Repudiation
 The gambling nature of our bot introduces a significant risk of repudiation due to its handling of virtual currency. Without a secure and immutable ledger documenting every transaction, users could exploit this lack of accountability to discreetly engage in activities and later deny their losses. This vulnerability would allow them to fraudulently dispute settled bets, undermining the system's integrity. Therefore, implementing a robust audit trail is essential to enforce financial accountability and ensure the bot's operational legitimacy.
+
+## Static Analysis in Action
+
+I analyzed our DENTL bot code using ESLint to discover multiple null variables. ESLint is a static code analysis tool that automatically checks for errors, style issues, security risks, and code-quality problems. The test was limited to the main branches of our program and applied only to JavaScript files. 
+
+The finding was that most of the null variables were found in the commands folder. This supported the Pareto distribution method, that most bugs were concentrated in a small area, with 80% of the bugs falling into a 20% area. 
+
+Examples of null variable included ‘interaction’, ‘formatResult’, and ‘username’. These variables could possibly be used to manipulate data in our bot as described in the STRIDE threat model, including spoofing and tampering with user data – gaining access to unauthorized functionality or sabotaging user interactions with our bot that would make it act in a harmful way.
+
 
 
 
