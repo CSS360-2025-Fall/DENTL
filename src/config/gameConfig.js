@@ -1,5 +1,12 @@
 // src/config/gameConfig.js
 export const GameConfig = {
+  limits: {
+    default: 999999,
+    rps: 10000,
+    coinflip: 10000,
+    blackjack: 999999,
+    horseRaces: 999999,
+  },
   freebie: {
     amount: 100,
     cooldownMs: 60 * 60 * 1000, // 1 hour
@@ -20,7 +27,7 @@ export const GameConfig = {
 
     baselineBias: 20, //percent above/below baseline to favor returning to baseline
 
-    stableBaseChance: 15,
+    stableBaseChance: 15, //weight, not percent, though currently adds to 100.
     stableMin: 0.95,
     stableMax: 1.05,
 
@@ -57,5 +64,29 @@ export const GameConfig = {
     injectionChance: 0.5, // 50% chance
     injectionMin: 0.15,
     injectionMax: 0.25,
+  },
+  horses: {
+    arion: {
+      speed: 4,
+      stamina: 3,
+      focus: 1,
+    },
+    bill: {
+      speed: 1,
+      stamina: 3,
+      focus: 3,
+    },
+
+    frankel: {
+      speed: 4,
+      stamina: 4,
+      focus: 3,
+    },
+
+    zippychippy: {
+      speed: 1,
+      stamina: 1,
+      focus: 1,
+    },
   },
 };

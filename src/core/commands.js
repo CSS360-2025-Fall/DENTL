@@ -266,6 +266,20 @@ const STOCKS = {
   ],
 };
 
+const SLOTS = {
+  name: "slots",
+  description: "Spin a slot machine (bet 0 = free play)",
+  type: 1,
+  options: [
+    {
+      type: 4,
+      name: "bet",
+      description: "bet amount (optional, 0 = free play)",
+      required: false,
+    },
+  ],
+};
+
 const commands = [
   LANG,
   RULES,
@@ -282,6 +296,7 @@ const commands = [
   QUOTE,
   SELL,
   STOCKS,
+  SLOTS,
 ];
 
 async function registerCommands() {
