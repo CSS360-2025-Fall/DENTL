@@ -126,8 +126,8 @@ export async function execute(interaction) {
   const endpoint = `https://discord.com/api/v10/webhooks/${appId}/${token}/messages/@original`;
 
   // Animation config
-  const frames = 8; // total frames
-  const delayMs = 500; // 2 edits/sec → 4 seconds
+  const frames = 16; // total frames
+  const delayMs = 250; // 2 edits/sec → 4 seconds
 
   // Start with random reels
   let cols = [randColumn(), randColumn(), randColumn()];
