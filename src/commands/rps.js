@@ -4,6 +4,7 @@ import { RPS_CHOICES, botPick, judge } from "../games/rps/rules.js";
 import { validateAndLockBet } from "../economy/bets.js";
 import { getBalance } from "../economy/db.js";
 import { t } from "../core/i18n.js";
+import { GameConfig } from "../config/gameConfig.js";
 
 export async function execute(interaction) {
   const ctx = interaction.context; // 0=guild, 1=bot DM, 2=user DM
@@ -24,7 +25,7 @@ export async function execute(interaction) {
     };
   }
 
-  const check = validateAndLockBet(userId, bet);
+  const check = validateAndLockBet(userId, bet, GameConfig.limits.rps);
   if (!check.ok) {
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,

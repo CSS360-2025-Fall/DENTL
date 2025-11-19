@@ -2,6 +2,7 @@
 import { InteractionResponseType } from "discord-interactions";
 import { getBalance } from "../economy/db.js";
 import { validateAndLockBet } from "../economy/bets.js";
+import { GameConfig } from "../config/gameConfig.js";
 
 // ──────────────────────────────────────────────
 // Symbols & paytable
@@ -11,12 +12,16 @@ import { validateAndLockBet } from "../economy/bets.js";
 // three = multiplier for 3-of-a-kind on the payline
 //
 const SYMBOLS = [
+  { emoji: "💀", weight: 20, two: 0, three: 0 },
   { emoji: "🍒", weight: 40, two: 1.5, three: 4 }, // common, small win
   { emoji: "🍋", weight: 35, two: 2, three: 5 },
+  { emoji: "❤️", weight: 35, two: 2, three: 5 },
   { emoji: "🔔", weight: 20, two: 3, three: 8 },
+  { emoji: "🎁", weight: 20, two: 3, three: 8 },
   { emoji: "⭐", weight: 10, two: 4, three: 12 },
-  { emoji: "7️⃣", weight: 4, two: 7, three: 21 },
-  { emoji: "💎", weight: 1, two: 10, three: 50 }, // rare jackpot
+  { emoji: "🤑", weight: 5, two: 5, three: 15 },
+  { emoji: "7️⃣", weight: 4, two: 7, three: 50 },
+  { emoji: "💎", weight: 1, two: 10, three: 100 }, // rare jackpot
 ];
 
 const totalWeight = SYMBOLS.reduce((a, s) => a + s.weight, 0);
@@ -85,9 +90,9 @@ function paylineResult(cols) {
 function renderFrame(cols, footer = "Spinning…") {
   const [c1, c2, c3] = cols;
 
-  const topRow = `   │ ${c1[0].emoji} │ ${c2[0].emoji} │ ${c3[0].emoji} │`;
+  const topRow = `    │ ${c1[0].emoji} │ ${c2[0].emoji} │ ${c3[0].emoji} │`;
   const midRow = `▶ ${c1[1].emoji} │ ${c2[1].emoji} │ ${c3[1].emoji} ◀`;
-  const botRow = `   │ ${c1[2].emoji} │ ${c2[2].emoji} │ ${c3[2].emoji} │`;
+  const botRow = `    │ ${c1[2].emoji} │ ${c2[2].emoji} │ ${c3[2].emoji} │`;
 
   return [
     "🎰 **SLOTS**",
@@ -113,7 +118,7 @@ export async function execute(interaction) {
       interaction.data.options?.find((o) => o.name === "bet")?.value ?? 0
     ) | 0;
 
-  const check = validateAndLockBet(userId, bet);
+  const check = validateAndLockBet(userId, bet, GameConfig.limits.slots);
   if (!check.ok) {
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,

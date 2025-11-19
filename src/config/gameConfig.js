@@ -6,6 +6,7 @@ export const GameConfig = {
     coinflip: 10000,
     blackjack: 999999,
     horseRaces: 999999,
+    slots: 777777,
   },
   freebie: {
     amount: 100,
