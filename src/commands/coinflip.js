@@ -1,6 +1,7 @@
 import { InteractionResponseType } from "discord-interactions";
 import { getBalance } from "../economy/db.js";
 import { validateAndLockBet } from "../economy/bets.js";
+import { GameConfig } from "../config/gameConfig.js";
 
 export async function execute(interaction) {
   const ctx = interaction.context;
@@ -24,7 +25,7 @@ export async function execute(interaction) {
     };
   }
 
-  const check = validateAndLockBet(userId, bet);
+  const check = validateAndLockBet(userId, bet, GameConfig.limits.coinflip);
   if (!check.ok) {
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,

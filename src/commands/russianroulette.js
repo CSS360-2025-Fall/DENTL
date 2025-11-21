@@ -1,5 +1,6 @@
 import { InteractionResponseType } from "discord-interactions";
 import { isAdmin } from "../core/utils.js";
+import { GameConfig } from "../config/gameConfig.js";
 
 // Helper for funny messages
 const phrases = ["You spin the cylinder and pull the trigger..."];
@@ -11,7 +12,7 @@ export async function execute(interaction) {
   const username = user.username;
 
   // Roll the 1/6 chance
-  const roll = Math.floor(Math.random() * 6) + 1;
+  const roll = Math.floor(Math.random() * GameConfig.russian.odds) + 1;
   const bullet = roll === 1; // 1 in 6 chance
 
   const intro = phrases[Math.floor(Math.random() * phrases.length)];
