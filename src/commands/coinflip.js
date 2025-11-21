@@ -1,5 +1,5 @@
 import { InteractionResponseType } from "discord-interactions";
-import { getBalance } from "../economy/db.js";
+import { getBalance, recordGameResult } from "../economy/db.js";
 import { validateAndLockBet } from "../economy/bets.js";
 
 export async function execute(interaction) {
@@ -37,6 +37,13 @@ export async function execute(interaction) {
 
   let newBal = getBalance(userId);
   if (bet > 0) newBal = win ? check.settle.win() : check.settle.lose();
+
+  // stats update
+  try {
+    recordGameResult(userId, win ? "win" : "lose", bet, "coinflip");
+  } catch (e) {
+    console.error("recordGameResult failed (coinflip):", e);
+  }
 
   const msg =
     `${

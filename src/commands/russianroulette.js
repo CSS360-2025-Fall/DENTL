@@ -1,5 +1,6 @@
 import { InteractionResponseType } from "discord-interactions";
 import { isAdmin } from "../core/utils.js";
+import { recordGameResult } from "../economy/db.js";
 
 // Helper for funny messages
 const phrases = ["You spin the cylinder and pull the trigger..."];
@@ -21,7 +22,7 @@ export async function execute(interaction) {
     bullet ? "💥 **You lost.**" : "😎 **You survived!**"
   }`;
 
-  // Skip admins entirely
+  // Admins: no stats & no kick
   if (isAdmin(userId)) {
     reply += "\n🛡️ You're an admin, so you're immune.";
     return {
@@ -30,7 +31,13 @@ export async function execute(interaction) {
     };
   }
 
-  // If they lose and bot can kick
+  // stats update for non-admin users(no bet; just track result)
+  try {
+    recordGameResult(userId, bullet ? "lose" : "win", 0, "russianroulette");
+  } catch (e) {
+    console.error("recordGameResult failed (russianroulette):", e);
+  }
+
   if (bullet && ctx === 0) {
     try {
       const guildId = interaction.guild_id;

@@ -7,7 +7,7 @@ import {
   formatResult,
 } from "../games/rps/rules.js";
 import { validateAndLockBet } from "../economy/bets.js";
-import { getBalance } from "../economy/db.js";
+import { getBalance, recordGameResult } from "../economy/db.js";
 import { t } from "../core/i18n.js";
 
 export async function execute(interaction) {
@@ -40,6 +40,13 @@ export async function execute(interaction) {
     if (result === "win") newBal = check.settle.win();
     else if (result === "tie") newBal = check.settle.tie();
     else newBal = check.settle.lose();
+  }
+
+  // stats update
+  try {
+    recordGameResult(userId, result, bet, "rps");
+  } catch (e) {
+    console.error("recordGameResult failed (rps):", e);
   }
 
   const hand = (h) => t(userId, h); // rock/paper/scissors
