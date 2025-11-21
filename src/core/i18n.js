@@ -1,9 +1,13 @@
 // src/core/i18n.js
 import fs from "fs";
 
-const LANG_FILE = "./data/lang.json";
+const LANG_FILE = "../data/lang.json";
 let userLang = {};
-try { userLang = JSON.parse(fs.readFileSync(LANG_FILE, "utf8")); } catch { userLang = {}; }
+try {
+  userLang = JSON.parse(fs.readFileSync(LANG_FILE, "utf8"));
+} catch {
+  userLang = {};
+}
 
 function saveLang() {
   fs.mkdirSync("./data", { recursive: true });
@@ -52,5 +56,5 @@ export function t(userId, key, vars = {}) {
   const lang = getUserLang(userId);
   const pack = dict[lang] || dict.en;
   const template = pack[key] || dict.en[key] || key;
-  return template.replace(/\{(\w+)\}/g, (_, k) => (vars[k] ?? `{${k}}`));
+  return template.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? `{${k}}`);
 }

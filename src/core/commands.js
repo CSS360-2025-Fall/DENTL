@@ -9,6 +9,18 @@ import {
 import { ITEMS } from "../registry/items.js";
 import { STOCKS as STOCK_REG } from "../registry/stocks.js";
 
+const POKER = {
+  name: "poker",
+  description: "Texas Hold'em Poker game",
+  type: 1,
+  options: [
+    { name: "join", type: 1, description: "Join the poker lobby" },
+    { name: "leave", type: 1, description: "Leave the poker table" },
+    { name: "start", type: 1, description: "Start the game" },
+    { name: "end", type: 1, description: "End the game (admin only)" }
+  ]
+};
+
 const BLACKJACK = {
   name: "blackjack",
   description: "Play blackjack against the bot",
@@ -293,7 +305,22 @@ const STOCKS = {
   ],
 };
 
+const SLOTS = {
+  name: "slots",
+  description: "Spin a slot machine (bet 0 = free play)",
+  type: 1,
+  options: [
+    {
+      type: 4,
+      name: "bet",
+      description: "bet amount (optional, 0 = free play)",
+      required: false,
+    },
+  ],
+};
+
 const commands = [
+  POKER,
   BLACKJACK,
   LANG,
   RULES,
@@ -311,6 +338,7 @@ const commands = [
   SELL,
   STOCKS,
   ROULETTE,
+  SLOTS,
 ];
 
 async function registerCommands() {
