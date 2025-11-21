@@ -1,6 +1,6 @@
 import { InteractionResponseType } from 'discord-interactions';
 import { validateBet } from "../economy/bets.js";
-import { getBalance, addBalance } from "./db.js";
+import { getBalance, addBalance } from "../economy/db.js";
 
 /**
 ** Interaction Flow **
