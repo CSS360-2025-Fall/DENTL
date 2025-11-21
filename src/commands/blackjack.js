@@ -1,5 +1,5 @@
-import { InteractionResponseType } from 'discord-interactions';
-import { getBalance } from "../economy/db.js";
+import { InteractionResponseType } from "discord-interactions";
+import { getBalance, recordGameResult } from "../economy/db.js";
 import { validateAndLockBet } from "../economy/bets.js";
 
 const sessions = new Map();
@@ -99,6 +99,14 @@ export async function interact(interaction) {
     if (value > 21) {
       session.done = true;
       session.settle.lose();
+
+      // stats: bust → lose
+      try {
+        recordGameResult(userId, "lose", session.bet, "blackjack");
+      } catch (e) {
+        console.error("recordGameResult failed (blackjack hit bust):", e);
+      }
+
       response =
         `You drew ${session.player[session.player.length-1].rank}${session.player[session.player.length-1].suit}. Hand value: ${value}. You bust! Lost ${session.bet} chips.\n` +
         `Your hand: ${session.player.map(c => `${c.rank}${c.suit}`).join(' ')} (Value: ${value})`;
@@ -130,17 +138,29 @@ export async function interact(interaction) {
     // Both hands always shown in results:
     let playerHandStr = `Your hand: ${session.player.map(c => `${c.rank}${c.suit}`).join(' ')} (Value: ${playerValue})`;
     let houseHandStr = `House hand: ${session.house.map(c => `${c.rank}${c.suit}`).join(' ')} (Value: ${houseValue})`;
+    let outcome;
 
     if (houseValue > 21 || playerValue > houseValue) {
       session.settle.win();
+      outcome = "win";
       response = `${houseHandStr}\n${playerHandStr}\nYou win! Won ${session.bet} chips.`;
     } else if (playerValue === houseValue) {
       session.settle.tie();
+      outcome = "tie";
       response = `${houseHandStr}\n${playerHandStr}\nTie! Bet refunded (${session.bet} chips).`;
     } else {
       session.settle.lose();
+      outcome = "lose";
       response = `${houseHandStr}\n${playerHandStr}\nYou lose! Lost ${session.bet} chips.`;
     }
+
+    // stats update
+    try {
+      recordGameResult(userId, outcome, session.bet, "blackjack");
+    } catch (e) {
+      console.error("recordGameResult failed (blackjack stand):", e);
+    }
+
     sessions.delete(userId);
     return {
       type: InteractionResponseType.UPDATE_MESSAGE,
@@ -172,6 +192,14 @@ export async function interact(interaction) {
     if (value > 21) {
       session.done = true;
       session.settle.lose();
+
+      // stats: bust → lose
+      try {
+        recordGameResult(userId, "lose", session.bet, "blackjack");
+      } catch (e) {
+        console.error("recordGameResult failed (blackjack double bust):", e);
+      }
+
       response =
         `You doubled down and drew ${session.player[session.player.length-1].rank}${session.player[session.player.length-1].suit}.` +
         `Your hand: ${session.player.map(c => `${c.rank}${c.suit}`).join(' ')} (Value: ${value})\n You bust! Lost ${session.bet} chips.`;
@@ -190,16 +218,29 @@ export async function interact(interaction) {
 
       let playerHandStr = `Your hand: ${session.player.map(c => `${c.rank}${c.suit}`).join(' ')} (Value: ${value})`;
       let houseHandStr = `House hand: ${session.house.map(c => `${c.rank}${c.suit}`).join(' ')} (Value: ${houseValue})`;
+      let outcome;
+      
       if (houseValue > 21 || value > houseValue) {
         session.settle.win();
+        outcome = "win";
         response = `${houseHandStr}\n${playerHandStr}\nYou win! Won ${session.bet} chips.`;
       } else if (value === houseValue) {
         session.settle.tie();
+        outcome = "tie";
         response = `${houseHandStr}\n${playerHandStr}\nTie! Bet refunded (${session.bet} chips).`;
       } else {
         session.settle.lose();
+        outcome = "lose";
         response = `${houseHandStr}\n${playerHandStr}\nYou lose! Lost ${session.bet} chips.`;
       }
+
+      // stats update
+      try {
+        recordGameResult(userId, outcome, session.bet, "blackjack");
+      } catch (e) {
+        console.error("recordGameResult failed (blackjack double):", e);
+      }
+
       sessions.delete(userId);
       return {
         type: InteractionResponseType.UPDATE_MESSAGE,

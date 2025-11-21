@@ -165,6 +165,33 @@ const GRANTITEM = {
   ],
 };
 
+const LEADERBOARD = {
+  name: "leaderboard",
+  description: "Show the top users (chips or stats)",
+  type: 1,
+  options: [
+    {
+      type: 3, // STRING
+      name: "category",
+      description: "What to rank by",
+      required: false,
+      choices: [
+        { name: "Balance (chips)", value: "balance" },
+        { name: "Wins", value: "wins" },
+        { name: "Games played", value: "games_played" },
+        { name: "Biggest win (bet)", value: "biggest_win" },
+        { name: "Biggest loss (bet)", value: "biggest_loss" },
+      ],
+    },
+    {
+      type: 4, // INTEGER
+      name: "limit",
+      description: "How many entries to show (1–25)",
+      required: false,
+    },
+  ],
+};
+
 const RUSSIANROULETTE = {
   name: "russianroulette",
   description: "Play the odds.",
@@ -228,6 +255,20 @@ const SELL = {
       type: 4, // INTEGER
       name: "qty",
       description: "Quantity to sell (defaults to 1)",
+      required: false,
+    },
+  ],
+};
+
+const STATS = {
+  name: "stats",
+  description: "Show game stats for you or another user",
+  type: 1,
+  options: [
+    {
+      type: 6, // USER
+      name: "user",
+      description: "User to view stats for (defaults to you)",
       required: false,
     },
   ],
@@ -330,12 +371,14 @@ const commands = [
   INVENTORY,
   GRANT,
   GRANTITEM,
+  LEADERBOARD,
   RUSSIANROULETTE,
   DAILY,
   FREEBIE,
   JOKE,
   QUOTE,
   SELL,
+  STATS,
   STOCKS,
   ROULETTE,
   SLOTS,
