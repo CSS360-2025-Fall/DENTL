@@ -13,6 +13,7 @@ import { tickAllStocks } from "../economy/stocks.js";
 import { GameConfig } from "../config/gameConfig.js";
 import { stock_prune_by_age } from "../economy/db.js";
 import * as BLACKJACK from '../commands/blackjack.js'; // adjust if needed
+import * as POKER from '../commands/poker.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -83,7 +84,19 @@ app.post(
       }
       // Add more cases for other games/commands/buttons here if needed
     }
-
+    
+    if (data.custom_id && data.custom_id.startsWith("poker_")) {
+    try {
+      const response = await POKER.interact(req.body);
+      return res.send(response);
+    } catch (err) {
+      console.error("Poker button error:", err, err.stack);
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { content: "❌ Error handling Poker interaction." }
+      });
+    }
+  }
     // 4) Anything else
     return res.status(400).json({ error: "unsupported interaction" });
   }
