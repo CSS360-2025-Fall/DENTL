@@ -207,6 +207,27 @@ function getFollowUpButtons(betType) {
 }
 
 // Helper: Spin the wheel
+function getRouletteBoard() {
+  return `\`\`\`
+ ┌────┬────┬────┐
+ │  1 │  2 │  3 │
+ │  4 │  5 │  6 │
+ │  7 │  8 │  9 │
+ │ 10 │ 11 │ 12 │
+ │ 13 │ 14 │ 15 │
+ │ 16 │ 17 │ 18 │
+ │ 19 │ 20 │ 21 │
+ │ 22 │ 23 │ 24 │
+ │ 25 │ 26 │ 27 │
+ │ 28 │ 29 │ 30 │
+ │ 31 │ 32 │ 33 │
+ │ 34 │ 35 │ 36 │
+ └────┴────┴────┘
+  [0]      [00]
+\`\`\``;
+}
+
+// Helper: Spin the wheel
 function spinWheel() {
   const numbers = [0, '00', ...Array.from({length: 36}, (_, i) => i + 1)];
   return numbers[Math.floor(Math.random() * numbers.length)];
@@ -271,10 +292,12 @@ function executeGame(session, userId, betType, selection) {
   if (isWin) {
     const winAmount = session.bet * payout;
     // create balance logic here
+    addBalance(userId, winAmount);
 
     response = `🎰 **Wheel: ${winningNumber}**\n\n✅ **YOU WIN!**\n${betType.toUpperCase()} (${payout}:1)\nWinnings: ${winAmount} chips`;
   } else {
     // create balance logic here
+    addBalance(userId, -session.bet);
 
     response = `🎰 **Wheel: ${winningNumber}**\n\n❌ **You Lost**\nYour bet: ${betNumbers.join(', ')}\nLost: ${session.bet} chips`;
   }
@@ -315,7 +338,7 @@ export async function execute(interaction) {
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
-      content: `🎰 Roulette Game\nYour bet: ${bet} chips\nSelect the type of bet you would like to make!`,
+      content: `🎰 Roulette Game\nYour bet: ${bet} chips\n${getRouletteBoard()}\nSelect the type of bet you would like to make!`,
       components: rouletteButtons()
     }
   };
