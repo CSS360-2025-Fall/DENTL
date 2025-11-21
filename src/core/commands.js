@@ -192,6 +192,19 @@ const QUOTE = {
   description: "get a random quote",
   type: 1,
 };
+const ROULETTE = {
+  name: "roulette",
+  description: "Play a game of Roulette!",
+  type: 1,
+  options: [
+    {
+      type: 4, // INTEGER
+      name: "bet",
+      description: "Your wager",
+      required: true,
+    },
+  ],
+};
 
 const SELL_CHOICES = ITEMS.filter(
   (i) => i.enabled !== false && typeof i.sell === "number" && i.sell > 0
@@ -324,6 +337,7 @@ const commands = [
   QUOTE,
   SELL,
   STOCKS,
+  ROULETTE,
   SLOTS,
 ];
 

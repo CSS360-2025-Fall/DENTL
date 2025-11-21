@@ -13,6 +13,7 @@ import { tickAllStocks } from "../economy/stocks.js";
 import { GameConfig } from "../config/gameConfig.js";
 import { stock_prune_by_age } from "../economy/db.js";
 import * as BLACKJACK from '../commands/blackjack.js'; // adjust if needed
+import * as ROULETTE from '../commands/roulette.js';
 import * as POKER from '../commands/poker.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -82,8 +83,48 @@ app.post(
           });
         }
       }
+
+      // Roulette buttons
+      if (data.custom_id && data.custom_id.startsWith("roulette_")) {
+        try {
+          const response = await ROULETTE.interact(req.body);
+          console.log("Roulette interact output:", response);
+          return res.send(response);
+        } catch (err) {
+          console.error("Roulette button error:", err, err.stack);
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: { content: "❌ Error handling Roulette interaction." }
+          });
+        }
+      }
+
       // Add more cases for other games/commands/buttons here if needed
+
     }
+
+     // 4) MODAL SUBMISSIONS (ADD THIS ENTIRE SECTION)
+    if (type === InteractionType.MODAL_SUBMIT) {
+      // Roulette modals
+      if (data.custom_id && data.custom_id.startsWith("roulette_modal_")) {
+        try {
+          const response = await ROULETTE.handleModalSubmit(req.body);
+          console.log("Roulette modal output:", response);
+          return res.send(response);
+        } catch (err) {
+          console.error("Roulette modal error:", err, err.stack);
+          return res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: { content: "❌ Error handling Roulette modal." }
+          });
+        }
+      }
+
+      // Add other modal handlers here if needed
+      
+    }
+
+
     
     if (data.custom_id && data.custom_id.startsWith("poker_")) {
     try {
