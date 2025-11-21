@@ -4,10 +4,10 @@
 
 ## Games:
 * Rock, Paper, Scissors ✅
-* Blackjack
+* Blackjack ✅
 * Poker
 * Coin Flip ✅
-* Slots
+* Slots ✅
 * Lottery
 * Horse Race
 * Memory
