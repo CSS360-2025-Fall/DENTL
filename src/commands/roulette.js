@@ -46,22 +46,22 @@ function rouletteButtons() {
     { id: 'split', label: 'Split (17:1)', style: 1 },
     { id: 'street', label: 'Street (11:1)', style: 1 },
     { id: 'corner', label: 'Corner (8:1)', style: 1 },
-    { id: 'five', label: 'Five (6:1)', style: 3 },
-    { id: 'line', label: 'Line (5:1)', style: 1 },
+    { id: 'five', label: 'Five (6:1)', style: 2 },
+    { id: 'line', label: 'Line (5:1)', style: 2 },
     { id: 'dozen', label: 'Dozen (2:1)', style: 2 },
     { id: 'column', label: 'Column (2:1)', style: 2 },
-    { id: 'low', label: '1-18 (1:1)', style: 2 },
-    { id: 'high', label: '19-36 (1:1)', style: 2 },
-    { id: 'red', label: '🔴 Red (1:1)', style: 4 },
-    { id: 'black', label: '⚫ Black (1:1)', style: 1 }
+    { id: 'low', label: '1-18 (1:1)', style: 3 },
+    { id: 'high', label: '19-36 (1:1)', style: 3 },
+    { id: 'red', label: '🔴 Red (1:1)', style: 3 },
+    { id: 'black', label: '⚫ Black (1:1)', style: 3 }
   ];
   
   const rows = [];
   
-  // Row 1: buttons 1-5
+  // Row 1: buttons 1-4
   rows.push({
     type: 1,
-    components: betTypes.slice(0, 5).map(bt => ({
+    components: betTypes.slice(0, 4).map(bt => ({
       type: 2,
       custom_id: `roulette_type_${bt.id}`,
       style: bt.style,
@@ -69,10 +69,10 @@ function rouletteButtons() {
     }))
   });
   
-  // Row 2: buttons 6-10
+  // Row 2: buttons 4-8
   rows.push({
     type: 1,
-    components: betTypes.slice(5, 10).map(bt => ({
+    components: betTypes.slice(4, 8).map(bt => ({
       type: 2,
       custom_id: `roulette_type_${bt.id}`,
       style: bt.style,
@@ -80,10 +80,10 @@ function rouletteButtons() {
     }))
   });
   
-  // Row 3: buttons 11-12
+  // Row 3: buttons 8-12
   rows.push({
     type: 1,
-    components: betTypes.slice(10, 12).map(bt => ({
+    components: betTypes.slice(8, 12).map(bt => ({
       type: 2,
       custom_id: `roulette_type_${bt.id}`,
       style: bt.style,
@@ -399,7 +399,7 @@ export async function interact(interaction) {
     return {
       type: InteractionResponseType.UPDATE_MESSAGE,
       data: {
-        content: `🎰 **${betType.toUpperCase()} Bet (${getPayout(betType)}:1)**\nSelect your numbers:`,
+        content: `🎰 **${betType.toUpperCase()} Bet (${getPayout(betType)}:1)\n${getRouletteBoard()}\n**\nSelect your numbers:`,
         components: followUpButtons
       }
     };
