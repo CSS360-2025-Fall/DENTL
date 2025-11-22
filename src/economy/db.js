@@ -49,6 +49,18 @@ function initSchema() {
     );
     CREATE INDEX IF NOT EXISTS idx_stock_prices_symbol_ts ON stock_prices(symbol, ts);
 
+    -- GAME STATS
+    CREATE TABLE IF NOT EXISTS stats (
+      user_id        TEXT PRIMARY KEY,
+      games_played   INTEGER NOT NULL DEFAULT 0,
+      wins           INTEGER NOT NULL DEFAULT 0,
+      losses         INTEGER NOT NULL DEFAULT 0,
+      ties           INTEGER NOT NULL DEFAULT 0,
+      biggest_win    INTEGER NOT NULL DEFAULT 0,
+      biggest_loss   INTEGER NOT NULL DEFAULT 0,
+      last_played_at INTEGER,
+      last_game_type TEXT
+    );
   `);
 }
 initSchema();
@@ -241,4 +253,179 @@ const sp_prune_age = db.prepare(`DELETE FROM stock_prices WHERE ts < ?`);
 export function stock_prune_by_age(days = 7) {
   const cutoff = Date.now() - days * 86400000;
   return sp_prune_age.run(cutoff).changes;
+}
+
+/* -------- GAME STATS API -------- */
+
+/**
+ * Ensure a stats row exists for a user.
+ */
+export function ensureStats(userId) {
+  const row = db
+    .prepare("SELECT user_id FROM stats WHERE user_id = ?")
+    .get(userId);
+  if (!row) {
+    db.prepare(`
+      INSERT INTO stats (
+        user_id,
+        games_played,
+        wins,
+        losses,
+        ties,
+        biggest_win,
+        biggest_loss,
+        last_played_at,
+        last_game_type
+      )
+      VALUES (?, 0, 0, 0, 0, 0, 0, strftime('%s','now'), NULL)
+    `).run(userId);
+  }
+}
+
+/**
+ * Record a generic game result.
+ * outcome: "win" | "lose" | "tie"
+ * bet: numeric bet size (used to track biggest win/loss)
+ * gameType: e.g. "rps", "coinflip", "blackjack", "russianroulette"
+ */
+export function recordGameResult(userId, outcome, bet, gameType) {
+  ensureStats(userId);
+
+  const cleanBet = Math.max(0, Number(bet) || 0);
+
+  // 🔍 DEBUG LOG
+  console.log("[recordGameResult]", { userId, outcome, bet: cleanBet, gameType });
+
+  const current = db
+    .prepare("SELECT biggest_win, biggest_loss FROM stats WHERE user_id = ?")
+    .get(userId);
+
+  let biggestWin = current?.biggest_win ?? 0;
+  let biggestLoss = current?.biggest_loss ?? 0;
+
+  if (outcome === "win" && cleanBet > biggestWin) {
+    biggestWin = cleanBet;
+  }
+  if (outcome === "lose" && cleanBet > biggestLoss) {
+    biggestLoss = cleanBet;
+  }
+
+  const winsInc = outcome === "win" ? 1 : 0;
+  const lossesInc = outcome === "lose" ? 1 : 0;
+  const tiesInc = outcome === "tie" ? 1 : 0;
+
+  db.prepare(`
+    UPDATE stats
+    SET
+      games_played   = games_played + 1,
+      wins           = wins + ?,
+      losses         = losses + ?,
+      ties           = ties + ?,
+      biggest_win    = ?,
+      biggest_loss   = ?,
+      last_played_at = strftime('%s','now'),
+      last_game_type = ?
+    WHERE user_id = ?
+  `).run(
+    winsInc,
+    lossesInc,
+    tiesInc,
+    biggestWin,
+    biggestLoss,
+    gameType,
+    userId
+  );
+}
+
+/**
+ * Get full stats for a given user.
+ */
+export function getStats(userId) {
+  const row = db.prepare(`
+    SELECT
+      user_id,
+      games_played,
+      wins,
+      losses,
+      ties,
+      biggest_win,
+      biggest_loss,
+      last_played_at,
+      last_game_type
+    FROM stats
+    WHERE user_id = ?
+  `).get(userId);
+
+  if (!row) {
+    return {
+      user_id: userId,
+      games_played: 0,
+      wins: 0,
+      losses: 0,
+      ties: 0,
+      biggest_win: 0,
+      biggest_loss: 0,
+      last_played_at: null,
+      last_game_type: null,
+    };
+  }
+
+  return {
+    user_id: row.user_id,
+    games_played: row.games_played ?? 0,
+    wins: row.wins ?? 0,
+    losses: row.losses ?? 0,
+    ties: row.ties ?? 0,
+    biggest_win: row.biggest_win ?? 0,
+    biggest_loss: row.biggest_loss ?? 0,
+    last_played_at: row.last_played_at ?? null,
+    last_game_type: row.last_game_type ?? null,
+  };
+}
+
+/**
+ * Leaderboard helpers
+ */
+
+// Top N users by chip balance
+export function getTopBalances(limit = 10) {
+  const safeLimit = Math.min(Math.max(Number(limit) || 10, 1), 50);
+  return db
+    .prepare(
+      `
+    SELECT user_id, balance
+    FROM balances
+    ORDER BY balance DESC
+    LIMIT ?
+  `
+    )
+    .all(safeLimit);
+}
+
+// Top N users by a given stats column
+export function getTopStatsBy(field, limit = 10) {
+  const allowed = new Set([
+    "games_played",
+    "wins",
+    "losses",
+    "ties",
+    "biggest_win",
+    "biggest_loss",
+  ]);
+
+  if (!allowed.has(field)) {
+    throw new Error(`Invalid leaderboard field: ${field}`);
+  }
+
+  const safeLimit = Math.min(Math.max(Number(limit) || 10, 1), 50);
+
+  const sql = `
+    SELECT user_id, ${field} AS value
+    FROM stats
+    WHERE ${field} > 0
+    ORDER BY ${field} DESC
+    LIMIT ?
+  `;
+
+  return db.prepare(sql).all(safeLimit);
 }
