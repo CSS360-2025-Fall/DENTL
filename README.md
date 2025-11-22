@@ -5,7 +5,7 @@
 ## Games:
 * Rock, Paper, Scissors ✅
 * Blackjack ✅
-* Poker
+* Poker ✅
 * Coin Flip ✅
 * Slots ✅
 * Lottery
@@ -17,12 +17,12 @@
 
 Extras:
 * Scratch Ticket
-* Roulette
+* Roulette ✅
 * Shell Game
 * Russian Roulette ✅
 
 ## Features
-* Leaderboards
+* Leaderboards ✅
 * Daily Log-In Reward ✅
 * Challenge Player
 * The Mafia
