@@ -23,7 +23,9 @@ Extras:
 
 ## Features
 * Leaderboards ✅
+* Stats ✅
 * Daily Log-In Reward ✅
+* Localization
 * Challenge Player
 * The Mafia
 * Achievements
