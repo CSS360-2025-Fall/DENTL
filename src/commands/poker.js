@@ -280,8 +280,8 @@ function setupHand(players, dealerPos) {
   
   return {
     phase: "preflop",
-    // deck: createDeck(),
-    deck: testDeck(), // For testing specific scenarios
+    deck: createDeck(),
+    // deck: testDeck(), // For testing specific scenarios
     board: [],
     holeCards: {},
     pot: 0,
