@@ -349,6 +349,7 @@ export async function interact(interaction) {
   const session = sessions.get(userId);
 
   if (!session) {
+    sessions.delete(userId);
     return {
       type: InteractionResponseType.UPDATE_MESSAGE,
       data: { content: "No active Roulette game!", components: [] }
