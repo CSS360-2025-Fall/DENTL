@@ -318,9 +318,10 @@ export async function execute(interaction) {
 
   // check if user is in existing roulette game
   if (sessions.has(userId)) {
+    sessions.delete(userId);
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: { content: "You already have a Roulette game in progress.", flags: 64 }
+      data: { content: "You already have a Roulette game in progress... Ending past session!", flags: 64 }
     };
   }
 
@@ -428,6 +429,7 @@ export async function handleModalSubmit(interaction) {
   const session = sessions.get(userId);
 
   if (!session) {
+
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: { content: "No active game found!", flags: 64 }
