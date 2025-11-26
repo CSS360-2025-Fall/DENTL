@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>DENTL Bot | Virtual Gambling Simulator</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+  <link href="styles/style.css" rel="stylesheet" />
+
+  <!-- Defer so the DOM is ready before JS runs -->
+  <script src="scripts/main.js" defer></script>
+</head>
+
+<body>
+  <header class="site-header" id="top">
+    <div class="hero">
+      <div class="hero-text">
+        <!-- This gets personalized by main.js -->
+        <h1 id="hero-heading">Welcome to DENTL!</h1>
+        <p class="tagline">
+          A Discord bot that simulates casino-style gambling using
+          <strong>virtual credits</strong> only — no real money involved.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="https://discord.gg/Wf8Y48ky" target="_blank">
+            Invite DENTL
+          </a>
+          <a class="btn secondary" href="https://github.com/CSS360-2025-Fall/DENTL" target="_blank">
+            View on GitHub
+          </a>
+          <a class="btn ghost" href="#games">
+            Explore Games
+          </a>
+        </div>
+
+        <button id="change-user" class="btn small">
+          Change name
+        </button>
+      </div>
+
+      <div class="hero-art">
+        <!-- Add your own logo / artwork here -->
+        <img src="images/DENTL_logo.png" alt="DENTL logo" class="hero-logo" />
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <a href="#overview">Overview</a>
+      <a href="#games">Games</a>
+      <a href="#economy">Economy & Stats</a>
+      <a href="#leaderboard">Leaderboard Demo</a>
+      <a href="#fun">Fun Commands</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <!-- OVERVIEW / HOW IT WORKS -->
+  <section id="overview" class="section section-light">
+    <h2>How DENTL Works</h2>
+    <p>
+      DENTL gives every player a virtual account and lets them try out
+      casino-style systems in a safe environment. You earn credits,
+      make bets, and watch your balance rise and fall — all without
+      risking real money.
+    </p>
+
+    <div class="feature-grid">
+      <article class="feature">
+        <h3>Daily Credits</h3>
+        <p>
+          Claim free credits once a day to grow your starting bankroll.
+          Great for testing new strategies.
+        </p>
+      </article>
+
+      <article class="feature">
+        <h3>Game Rules on Demand</h3>
+        <p>
+          Unsure how a game works? Ask the bot for the rules before you
+          play so you always know what you are doing.
+        </p>
+      </article>
+
+      <article class="feature">
+        <h3>Responsible Play</h3>
+        <p>
+          Need a break? Use the playful 1-in-6 “kick” style commands or
+          take advantage of betting limits for a more realistic feel.
+        </p>
+      </article>
+
+      <article class="feature">
+        <h3>Multilingual Support</h3>
+        <p>
+          Servers with friends from different countries can all join in.
+          DENTL supports multiple languages.
+        </p>
+      </article>
+
+      <article class="feature">
+        <h3>Virtual Stock Market</h3>
+        <p>
+          Invest credits into a fake stock market that updates
+          regularly. Watch your “portfolio” go up or down.
+        </p>
+      </article>
+
+      <article class="feature">
+        <h3>Win–Loss Tracking</h3>
+        <p>
+          Track wins, losses, win rate, and biggest bets to see how
+          your skills evolve over time.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- GAMES SECTION -->
+  <section id="games" class="section">
+    <h2>Games in DENTL</h2>
+    <p>
+      DENTL includes a variety of casino-style games and interactive systems. Click a game below to see how it works inside the bot.
+    </p>
+
+    <div class="game-grid">
+      <article class="game-card">
+        <h3 class="game-title">Blackjack</h3>
+        <p class="game-tagline">Beat the dealer without going over 21.</p>
+        <div class="game-details">
+          <p>Command: <code>/blackjack</code></p>
+          <p>
+            Plays against the casino. Uses your DENTL balance for bets
+            and updates your stats with wins, losses, and ties.
+          </p>
+        </div>
+      </article>
+
+      <article class="game-card">
+        <h3 class="game-title">Poker (Planned)</h3>
+        <p class="game-tagline">
+          A full poker system is being developed for Version 2.0.0, offering multi-round betting and hand comparisons.
+        </p>
+        <div class="game-details">
+          <p>
+            Planned for Version 2.0.0. Players will be able to join
+            tables, bet through multiple rounds, and compare final
+            hands.
+          </p>
+        </div>
+      </article>
+
+      <article class="game-card">
+        <h3 class="game-title">Rock, Paper, Scissors</h3>
+        <p class="game-tagline">
+          Quick bets against the casino or friends.
+        </p>
+        <div class="game-details">
+          <p>Command: <code>/rps</code></p>
+          <p>
+            Easy way to test probability and streaks. Great starter
+            game when you first join the bot.
+          </p>
+        </div>
+      </article>
+
+      <article class="game-card">
+        <h3 class="game-title">Coin Flip</h3>
+        <p class="game-tagline">
+          A classic 50/50 gamble with simple payouts.
+        </p>
+        <div class="game-details">
+          <p>Command: <code>/coinflip</code></p>
+          <p>
+            Helps players see how randomness can still feel “unfair”
+            over short runs even when the odds are even.
+          </p>
+        </div>
+      </article>
+
+      <article class="game-card">
+        <h3 class="game-title">Russian Roulette</h3>
+        <p class="game-tagline">
+          Risky high-stakes game with a playful twist.
+        </p>
+        <div class="game-details">
+          <p>Command: <code>/russianroulette</code></p>
+          <p>
+            Simulates a one-in-six chance event. Good for exploring
+            risk and reward without real danger.
+          </p>
+        </div>
+      </article>
+
+      <article class="game-card">
+        <h3 class="game-title">Stock Market</h3>
+        <p class="game-tagline">
+          Invest in changing prices and watch your credits move.
+        </p>
+        <div class="game-details">
+          <p>Command: <code>/stock</code> and related commands</p>
+          <p>
+            DENTL includes a virtual stock market where prices change over time and players can invest their credits to try to grow their balance.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ECONOMY & STATS -->
+  <section id="economy" class="section section-light">
+    <h2>Economy, Leaderboards, and Stats</h2>
+    <p>
+      DENTL tracks player progression with stats, balances, betting history, and win–loss data. These features create a deeper sense of long-term advancement.
+    </p>
+
+    <div class="economy-layout">
+      <div class="economy-block">
+        <h3>Daily Accounting System</h3>
+        <p>
+          When a player claims daily credits for the first time, DENTL creates an account that stores their Discord name, balance, and gameplay data.
+        </p>
+      </div>
+
+      <div class="economy-block">
+        <h3>Player Stats Demo</h3>
+        <p>Select a sample player to see how the stats screen might look.</p>
+
+        <label for="demo-player-select" class="label-inline">
+          Choose a player:
+        </label>
+        <select id="demo-player-select">
+          <option value="luckyLeo">LuckyLeo</option>
+          <option value="highrollerHana">HighrollerHana</option>
+          <option value="mathGamblerMax">MathGamblerMax</option>
+        </select>
+
+        <div id="demo-stats-panel" class="stats-panel">
+          <!-- Filled by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERBOARD DEMO -->
+  <section id="leaderboard" class="section">
+    <h2>Economy Leaderboard Demo</h2>
+    <p>
+      The leaderboard lets players compare their virtual wealth by showing balances, wins, and games played. Below is a demo version that generates sample data.
+    </p>
+
+    <div class="leaderboard-controls">
+      <label for="board-metric" class="label-inline">
+        Sort by:
+      </label>
+      <select id="board-metric">
+        <option value="balance">Balance</option>
+        <option value="wins">Wins</option>
+        <option value="games">Games Played</option>
+      </select>
+
+      <label for="board-size" class="label-inline">
+        Show top:
+      </label>
+      <select id="board-size">
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+      </select>
+
+      <button id="board-generate" class="btn secondary">
+        Generate sample leaderboard
+      </button>
+    </div>
+
+    <table id="board-table" class="leaderboard-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Player</th>
+          <th>Balance</th>
+          <th>Wins</th>
+          <th>Games Played</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Filled by JavaScript -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- FUN COMMANDS -->
+  <section id="fun" class="section section-light">
+    <h2>Fun Non-Gambling Commands</h2>
+    <p>
+      DENTL also includes fun non-gambling commands like jokes and inspirational quotes for lighthearted interaction.
+    </p>
+
+    <div class="fun-row">
+      <div class="fun-controls">
+        <button id="tell-joke" class="btn secondary">
+          Tell me a joke
+        </button>
+        <button id="share-quote" class="btn ghost">
+          Share a quote
+        </button>
+      </div>
+
+      <div id="fun-output" class="fun-output">
+        Click a button to see what DENTL might say.
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <h2>FAQ</h2>
+    <details>
+      <summary>Is this real gambling?</summary>
+      <p>
+        No. All credits in DENTL are virtual and have no real-world
+        value. The bot is meant to explore probability, risk, and reward
+        in a safe way.
+      </p>
+    </details>
+
+    <details>
+      <summary>Can I reset my stats or balance?</summary>
+      <p>
+        Server admins can configure how resets and wipes work.
+        Typically, there are commands to reset balances or start fresh
+        seasons for leaderboards.
+      </p>
+    </details>
+
+    <details>
+      <summary>Where can I learn more?</summary>
+      <p>
+        Check out the
+        <a href="https://dentlbot.com/docs" target="_blank">official documentation</a>
+        or the
+        <a href="https://github.com/CSS360-2025-Fall/DENTL" target="_blank">
+          GitHub repository
+        </a>
+        for technical details.
+      </p>
+    </details>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    </p>
+    <p>
+      <a href="#top">Back to top ↑</a>
+    </p>
+  </footer>
+</body>
+</html>
