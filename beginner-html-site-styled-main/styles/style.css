@@ -1,41 +1,355 @@
-html {
-  font-size: 10px;
-  font-family: 'Open Sans', sans-serif;
+/* Base layout --------------------------------------------------------- */
+
+* {
+  box-sizing: border-box;
 }
-
-
-h1 {
-  font-size: 60px;
-  text-align: center;
-}
-
-p, li {
-  font-size: 16px;
-  line-height: 2;
-  letter-spacing: 1px;
-}
-
 
 html {
-  background-color: #00539F;
+  scroll-behavior: smooth;
 }
 
 body {
-  width: 600px;
-  margin: 0 auto;
-  background-color: #FF9500;
-  padding: 0 20px 20px 20px;
-  border: 5px solid black;
-}
-
-h1 {
   margin: 0;
-  padding: 20px 0;
-  color: #00539F;
-  text-shadow: 3px 3px 1px black;
+  font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+  color: #111;
+  background: #004c8c;
 }
 
-img {
-  display: block;
-  margin: 0 auto;
+.section {
+  padding: 3rem 8vw;
+  background: #f7941d;
+  color: #111;
+}
+
+.section-light {
+  background: #ffe2b5;
+}
+
+.section h2 {
+  margin-top: 0;
+  font-size: 2rem;
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* Header / hero ------------------------------------------------------- */
+
+.site-header {
+  background: #004c8c;
+  color: #fff;
+  padding: 1.5rem 6vw 0;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 3px solid #f7941d;
+}
+
+.hero-text {
+  flex: 1 1 260px;
+}
+
+#hero-heading {
+  font-size: 2.6rem;
+  margin: 0 0 0.5rem;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.tagline {
+  margin: 0 0 1rem;
+  max-width: 30rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.hero-art {
+  flex: 0 1 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero-logo {
+  max-width: 220px;
+  border-radius: 1rem;
+  background: none;
+  padding: 0.5rem 1rem;
+}
+
+.hero-cards {
+  max-width: 220px;
+  border-radius: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* Buttons ------------------------------------------------------------- */
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+}
+
+.btn.primary {
+  background: #f7941d;
+  color: #111;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+}
+
+.btn.primary:hover {
+  background: #ffb44f;
+  transform: translateY(-1px);
+}
+
+.btn.secondary {
+  background: #ffe2b5;
+  color: #111;
+}
+
+.btn.secondary:hover {
+  background: #ffd18a;
+  transform: translateY(-1px);
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1px solid #ffe2b5;
+  color: #ffe2b5;
+}
+
+.btn.ghost:hover {
+  background: rgba(255, 226, 181, 0.15);
+}
+
+.btn.small {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.75rem;
+}
+
+/* Navigation ---------------------------------------------------------- */
+
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.75rem 0 1.25rem;
+}
+
+.main-nav a {
+  color: #ffe2b5;
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid transparent;
+}
+
+.main-nav a:hover {
+  border-bottom-color: #f7941d;
+}
+
+/* Feature grid -------------------------------------------------------- */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.feature {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Games --------------------------------------------------------------- */
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.game-card {
+  background: #ffe2b5;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.game-title {
+  margin: 0;
+}
+
+.game-tagline {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.game-details {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Economy & stats ----------------------------------------------------- */
+
+.economy-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.economy-block {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.label-inline {
+  display: inline-block;
+  margin: 0.5rem 0 0.25rem;
+  font-size: 0.9rem;
+}
+
+.stats-panel {
+  margin-top: 0.75rem;
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+}
+
+.stats-panel ul {
+  padding-left: 1.2rem;
+}
+
+/* Leaderboard --------------------------------------------------------- */
+
+.leaderboard-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 1rem 0 1.5rem;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffe2b5;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 0.55rem 0.85rem;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.leaderboard-table thead {
+  background: #f7941d;
+}
+
+.leaderboard-table tbody tr:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Fun commands -------------------------------------------------------- */
+
+.fun-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-start;
+  margin-top: 1rem;
+}
+
+.fun-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fun-output {
+  flex: 1 1 240px;
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  min-height: 3.2rem;
+  font-size: 0.95rem;
+}
+
+/* FAQ ----------------------------------------------------------------- */
+
+#faq details {
+  margin-bottom: 0.75rem;
+  background: #ffe2b5;
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.9rem;
+}
+
+#faq summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Footer -------------------------------------------------------------- */
+
+.site-footer {
+  text-align: center;
+  padding: 1.5rem 1rem 2rem;
+  background: #004c8c;
+  color: #ffe2b5;
+  font-size: 0.9rem;
+}
+
+.site-footer a {
+  color: #f7941d;
+}
+
+/* Responsive tweaks --------------------------------------------------- */
+
+@media (max-width: 720px) {
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .economy-layout {
+    grid-template-columns: 1fr;
+  }
 }
