@@ -17,8 +17,8 @@ const POKER = {
     { name: "join", type: 1, description: "Join the poker lobby" },
     { name: "leave", type: 1, description: "Leave the poker table" },
     { name: "start", type: 1, description: "Start the game" },
-    { name: "end", type: 1, description: "End the game (admin only)" }
-  ]
+    { name: "end", type: 1, description: "End the game (admin only)" },
+  ],
 };
 
 const BLACKJACK = {
@@ -360,6 +360,26 @@ const SLOTS = {
   ],
 };
 
+const SHOP = {
+  name: "shop",
+  description: "View all items you can buy with your chips.",
+  type: 1,
+};
+
+const BUY = {
+  name: "buy",
+  description: "Buy a role or item from the shop.",
+  type: 1,
+  options: [
+    {
+      type: 3,
+      name: "item",
+      description: "Item ID (see /shop).",
+      required: true,
+    },
+  ],
+};
+
 const commands = [
   POKER,
   BLACKJACK,
@@ -382,6 +402,8 @@ const commands = [
   STOCKS,
   ROULETTE,
   SLOTS,
+  SHOP,
+  BUY,
 ];
 
 async function registerCommands() {

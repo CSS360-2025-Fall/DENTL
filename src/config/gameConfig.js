@@ -18,7 +18,7 @@ export const GameConfig = {
     //cooldownMs: 24 * 60 * 60 * 1000, // optional for 24h variant
   },
   russian: {
-    odds: 6, // 1 in X chance of losing
+    odds: 1, // 1 in X chance of losing
   },
   economy: {
     startingBalance: 0,
