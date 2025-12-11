@@ -8,8 +8,10 @@ const __dirname = path.dirname(__filename);
 const DB_PATH = path.join(__dirname, "..", "data", "casino.sqlite");
 console.log("🗄️ Using DB at:", DB_PATH);
 
-const db = new Database(DB_PATH);
-db.pragma("journal_mode = DELETE");
+const db = new Database('src/data/casino.sqlite', { 
+    fileMustExist: false 
+});
+db.pragma('journal_mode = DELETE');
 
 // --- create schema BEFORE any prepare() ---
 function initSchema() {
