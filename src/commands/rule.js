@@ -2,10 +2,22 @@ import { InteractionResponseType } from "discord-interactions";
 
 // Define rules for each game type
 const GAME_RULES = {
-  rps: "Rock Paper Scissors: Choose rock, paper, or scissors. Rock beats scissors, scissors beats paper, and paper beats rock. If both choose the same, it's a tie.",
+  rps: 
+    "Rock Paper Scissors: Choose rock, paper, or scissors. Rock beats scissors, scissors beats paper, and paper beats rock. If both choose the same, it's a tie.",
   coinflip:
     "Coinflip: Choose heads or tails. If your choice matches the coin, you win.",
-  russianroulette: "Russian Roulette: Take a chance with a 1/6 risk of losing.",
+  russianroulette: 
+    "Russian Roulette: Take a chance with a 1/6 risk of losing.",
+  blackjack:
+    "Blackjack: Aim to get a hand value of 21 or as close as possible without going over. Beat the dealer to win.",
+  poker: 
+    "Poker: Texas Hold'em rules apply. Use your two private cards and five community cards to make the best hand.",
+  roulette:
+    "Roulette: Place bets on where the ball will land on the spinning wheel. Various bet types with different payouts are available.",
+  slots:
+    "Slots: Spin the reels and match symbols on the center payline to win chips. Different symbols have different payout rates.",
+  stocks:
+    "Stocks: Buy and sell stocks based on fluctuating market prices to make a profit.",
   //add more game rules as needed
 };
 
@@ -186,271 +198,325 @@ If your hand value exceeds 21, you immediately bust and lose, regardless of the 
     };
   }
 
-  if (gameType == "poker") {
-    return {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        content: `**TEXAS HOLD'EM POKER RULES**
-
-**Objective:**
-Win chips by either having the best 5-card poker hand at showdown, or by making all other players fold.
-
-**Game Setup:**
-• 2-8 players per table
+if (gameType == "poker") {
+  return {
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    data: {
+      embeds: [
+        {
+          title: "🃏 TEXAS HOLD'EM POKER RULES",
+          description: `**Objective:** Win chips by either having the best 5-card poker hand at showdown, or by making all other players fold.`,
+          color: 0x2ecc71,
+          fields: [
+            {
+              name: "📋 Game Setup",
+              value: `• 2-8 players per table
 • Each player starts with their current chip balance
 • Minimum balance required: 1,000 chips
-• Small Blind: 50 chips, Big Blind: 100 chips
-
-**Joining & Leaving:**
-• Use /poker join to join the lobby or to start a game
-• If you join mid-game, you'll enter at the start of the next hand
-• Use /poker leave to leave after your current hand finishes
-• Use /poker start to begin the game (requires 2-8 players)
-
-**Blinds:**
-• The dealer position rotates clockwise each hand
+• Small Blind: 50 chips | Big Blind: 100 chips`,
+              inline: false
+            },
+            {
+              name: "🎮 Commands",
+              value: `• **/poker join** - Join the lobby or active game
+• **/poker leave** - Leave after current hand finishes
+• **/poker start** - Start the game (requires 2-8 players)
+• **/poker end** - (Admin only) End the game immediately`,
+              inline: false
+            },
+            {
+              name: "🔄 Blinds & Dealer",
+              value: `• Dealer position rotates clockwise each hand
 • Player left of dealer posts Small Blind (50 chips)
 • Next player posts Big Blind (100 chips)
-• Blinds are forced bets that start the pot
+• Blinds are forced bets that start the pot`,
+              inline: false
+            },
+            {
+              name: "🎲 Betting Rounds",
+              value: `**1. Pre-Flop:** Each player gets 2 hole cards (private, sent via DM). Betting starts left of big blind.
 
-**Betting Rounds:**
+**2. Flop:** 3 community cards dealt face-up. Betting round begins.
 
-**1. Pre-Flop:**
-• Each player receives 2 cards (private, sent via DM)
-• Betting starts with player left of big blind
-• Players can: Fold, Call (match current bet), or Raise
+**3. Turn:** 4th community card dealt. Another betting round.
 
-**2. Flop:**
-• 3 community cards dealt face-up on the board
-• Another betting round begins (starting left of dealer)
-• Players can: Check (bet 0), Bet, Call, Raise, or Fold
+**4. River:** 5th and final community card dealt. Final betting round.
 
-**3. Turn:**
-• 1 additional community card dealt
-• Another betting round occurs
-
-**4. River:**
-• Final community card dealt
-• Final betting round occurs
-
-**5. Showdown:**
-• Remaining players reveal their hands
-• Best 5-card hand using any combination of 2 hole cards + 5 community cards wins the pot
-
-**Player Actions:**
-• **Fold**: Give up your hand and forfeit the pot. You lose any chips already bet.
-• **Check**: Pass action to next player (only when no bet to call)
-• **Call**: Match the current bet amount
-• **Raise**: Increase the bet by at least the minimum raise amount
-  - Minimum raise = the previous bet/raise amount
-  - Raise buttons: X1, X2, X3, X5 (multipliers of minimum raise), or All-In
-• **All-In**: Bet all your remaining chips
-
-**Betting Rules:**
-• Minimum bet: 100 chips (big blind amount)
-• No maximum bet (true no-limit)
-• If a player raises, all other players must call, raise, or fold
-• Betting round ends when all active players have matched the highest bet
-
-**Action Timer:**
-• You have 30 seconds to act on your turn
-• If time expires, you automatically fold
-
-**Hand Rankings (Best to Worst):**
-1. Royal Flush: A-K-Q-J-10, all same suit
-2. Straight Flush: 5 cards in sequence, all same suit
-3. Four of a Kind: 4 cards of same rank
-4. Full House: 3 of a kind + a pair
-5. Flush: 5 cards of same suit
-6. Straight: 5 cards in sequence
-7. Three of a Kind: 3 cards of same rank
-8. Two Pair: 2 different pairs
-9. One Pair: 2 cards of same rank
-10. High Card: Highest card when no other hand is made
-
-**Winning the Pot:**
-• Last player remaining (all others folded) wins entire pot
+**5. Showdown:** Remaining players reveal hands. Best 5-card hand wins.`,
+              inline: false
+            },
+            {
+              name: "💰 Player Actions",
+              value: `• **Fold** - Give up hand and forfeit pot
+• **Check** - Pass action to next player (only when no bet to call)
+• **Call** - Match the current bet amount
+• **Raise** - Increase bet (buttons: X1, X2, X3, X5 multipliers or All-In)
+• **All-In** - Bet all remaining chips`,
+              inline: false
+            },
+            {
+              name: "📏 Betting Rules",
+              value: `• Minimum bet: 100 chips (big blind amount)
+• No maximum bet (true no-limit poker)
+• Minimum raise = previous bet/raise amount
+• If player raises, all others must call, raise, or fold
+• Betting round ends when all active players matched highest bet`,
+              inline: false
+            },
+            {
+              name: "⏱️ Action Timer",
+              value: `• You have **30 seconds** to act on your turn
+• If time expires, you **automatically fold**`,
+              inline: false
+            },
+            {
+              name: "🏆 Hand Rankings (Best to Worst)",
+              value: `1️⃣ Royal Flush - A-K-Q-J-10, all same suit
+2️⃣ Straight Flush - 5 cards in sequence, same suit
+3️⃣ Four of a Kind - 4 cards of same rank
+4️⃣ Full House - 3 of a kind + a pair
+5️⃣ Flush - 5 cards of same suit
+6️⃣ Straight - 5 cards in sequence
+7️⃣ Three of a Kind - 3 cards of same rank
+8️⃣ Two Pair - 2 different pairs
+9️⃣ One Pair - 2 cards of same rank
+🔟 High Card - Highest card when no other hand`,
+              inline: false
+            },
+            {
+              name: "🎯 Winning the Pot",
+              value: `• Last player remaining (all others folded) wins entire pot
 • At showdown, best hand wins the pot
-• If two players have equal hands, the pot is split evenly
-
-**Game End:**
-• Game ends when only 1 player remains
-• All remaining chips are paid out to players
-• Final standings show profit/loss for each player
-• Make sure to use /poker leave, if you wish to exit the game
-
-**Thread Information:**
-• Game creates a dedicated Discord thread for all game updates
-• Hole cards are sent privately via DM
+• If two players have equal hands, pot is split evenly`,
+              inline: false
+            },
+            {
+              name: "🏁 Game End",
+              value: `• Game ends when only 1 player remains
+• Game ends when admin uses /poker end
+• All remaining chips paid out to players
+• Final standings show profit/loss for each player`,
+              inline: false
+            },
+            {
+              name: "💬 Thread Information",
+              value: `• Game creates a dedicated Discord thread for updates
+• Hole cards sent privately via DM
 • Community cards, pot size, and player actions posted in thread`,
-      },
-    };
-  }
+              inline: false
+            }
+          ],
+          footer: {
+            text: "Joining mid-game? You'll enter at the start of the next hand!"
+          }
+        }
+      ]
+    }
+  };
+}
 
-  if (gameType == "roulette") {
-    return {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        content: `**ROULETTE RULES**
+if (gameType == "roulette") {
+  return {
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    data: {
+      embeds: [
+        {
+          title: "🎰 ROULETTE RULES",
+          description: `**Objective:** Predict where the ball will land on the spinning roulette wheel and win based on your bet type.`,
+          color: 0xe74c3c,
+          fields: [
+            {
+              name: "🎡 The Wheel",
+              value: `• Numbers 0-36 plus 00 (American Roulette)
+• **Red numbers:** 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36
+• **Black numbers:** 2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35
+• **Green numbers:** 0 and 00`,
+              inline: false
+            },
+            {
+              name: "🎮 How to Play",
+              value: `1. Use **/roulette <bet amount>**
+2. Roulette board and bet type buttons appear
+3. Select your bet type
+4. For some bets, select specific numbers or enter in modal
+5. Wheel spins and result is revealed
+6. Win or lose based on where ball lands`,
+              inline: false
+            },
+            {
+              name: "💎 Inside Bets (High Risk, High Reward)",
+              value: `**Single (35:1)** - One specific number (0, 00, or 1-36)
+**Split (17:1)** - Two adjacent numbers (horizontal or vertical)
+**Street (11:1)** - Row of 3 consecutive numbers
+**Corner (8:1)** - 4 numbers forming a square
+**Five (6:1)** - Special bet: 0, 00, 1, 2, 3
+**Line (5:1)** - Two adjacent streets (6 numbers)`,
+              inline: false
+            },
+            {
+              name: "💰 Outside Bets (Lower Risk, Lower Reward)",
+              value: `**Dozen (2:1)** - 12 consecutive numbers
+  • 1st Dozen: 1-12
+  • 2nd Dozen: 13-24
+  • 3rd Dozen: 25-36
 
-**Objective:**
-Predict where the ball will land on the spinning roulette wheel and win based on your bet type.
+**Column (2:1)** - One of three vertical columns
+  • Column 1: 1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34
+  • Column 2: 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35
+  • Column 3: 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36`,
+              inline: false
+            },
+            {
+              name: "🎲 Even Money Bets (1:1)",
+              value: `**🔴 Red** - Any red number (18 numbers)
+**⚫ Black** - Any black number (18 numbers)
+**Low (1-18)** - Numbers 1 through 18
+**High (19-36)** - Numbers 19 through 36`,
+              inline: false
+            },
+            {
+              name: "✅ Winning & Losing",
+              value: `**Win:** Ball lands on number covered by your bet
+• Winnings = (bet amount) × (payout multiplier)
 
-**The Wheel:**
-• Numbers 0-36 plus 00 (American Roulette)
-• Red numbers: 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36
-• Black numbers: 2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35
-• Green numbers: 0 and 00
+**Lose:** Ball lands on number not covered by your bet
+• You lose your bet amount
 
-**How to Play:**
-1. Place your bet using /roulette <bet amount>
-2. The roulette board and bet type options will appear
-3. Select your bet type from the buttons
-4. For some bets, you'll need to select specific numbers or enter them in a modal
-5. The wheel spins and the result is revealed
-6. Win or lose based on whether the ball lands on your bet
+**Special Note:** 0 and 00 cause all outside bets (red/black, low/high) to lose`,
+              inline: false
+            },
+            {
+              name: "📝 Number Entry",
+              value: `• **Single bets:** Enter one number (0, 00, or 1-36)
+• **Split bets:** Enter two adjacent numbers separated by comma
+  Example: "5,8" or "14,17"
+• **All other bets:** Use button selection`,
+              inline: false
+            },
+            {
+              name: "💵 Example Payouts",
+              value: `• Bet 100 on Single number 17 (35:1) → Ball lands on 17 → Win 3,500 chips
+• Bet 100 on Red (1:1) → Ball lands on red → Win 100 chips (receive 200 total)
+• Bet 100 on Dozen 1-12 (2:1) → Ball lands on 7 → Win 200 chips`,
+              inline: false
+            }
+          ],
+          footer: {
+            text: "Tip: Inside bets = higher risk/reward | Outside bets = safer but lower payout"
+          }
+        }
+      ]
+    }
+  };
+}
 
-**Bet Types and Payouts:**
-
-**Inside Bets (Higher Risk, Higher Reward):**
-
-• **Single (35:1)**: Bet on one specific number (0, 00, or 1-36)
-  - Enter the exact number you want to bet on
-  - Highest payout but lowest probability
-
-• **Split (17:1)**: Bet on two adjacent numbers
-  - Numbers must be next to each other horizontally or vertically on the table
-  - Example: 5 and 8, or 14 and 17
-
-• **Street (11:1)**: Bet on a row of three consecutive numbers
-  - Covers 3 horizontal numbers
-  - Example: 1-2-3, 4-5-6, or 31-32-33
-
-• **Corner (8:1)**: Bet on four numbers that form a square
-  - Numbers must be adjacent in a 2x2 grid
-  - Example: 1-2-4-5, or 14-15-17-18
-
-• **Five (6:1)**: Special bet covering 0, 00, 1, 2, and 3
-  - Only bet that covers exactly 5 numbers
-  - Automatically executed when selected
-
-• **Line (5:1)**: Bet on two adjacent streets (6 numbers total)
-  - Covers 6 consecutive numbers across two rows
-  - Example: 1-6, 7-12, or 31-36
-
-**Outside Bets (Lower Risk, Lower Reward):**
-
-• **Dozen (2:1)**: Bet on 12 consecutive numbers
-  - 1st Dozen: 1-12
-  - 2nd Dozen: 13-24
-  - 3rd Dozen: 25-36
-
-• **Column (2:1)**: Bet on one of three vertical (on the board) columns
-  - Column 1: 1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34
-
-  - Column 2: 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35
-
-  - Column 3: 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36
-
-• **Red (1:1)**: Bet on any red number (18 numbers total)
-  - Automatically executed when selected
-  - Wins if ball lands on any red number
-
-• **Black (1:1)**: Bet on any black number (18 numbers total)
-  - Automatically executed when selected
-  - Wins if ball lands on any black number
-
-• **Low 1-18 (1:1)**: Bet on numbers 1 through 18
-  - Automatically executed when selected
-
-• **High 19-36 (1:1)**: Bet on numbers 19 through 36
-  - Automatically executed when selected
-
-**Winning & Losing:**
-• If the ball lands on a number covered by your bet, you win according to the payout ratio
-• Your winnings = (bet amount x payout multiplier)
-• If the ball lands on a number not covered by your bet, you lose your bet amount
-• 0 and 00 cause all outside bets (red/black, odd/even, low/high) to lose
-
-**Example:**
-• Bet 100 chips on "Single number 17" (35:1 payout)
-• Ball lands on 17: You win 3,500 chips
-• Ball lands on any other number: You lose 100 chips
-
-**Number Entry:**
-• For Single bets: Enter one number (0, 00, or 1-36)
-• For Split bets: Enter two adjacent numbers separated by comma (example: "5,8")
-• All other bets use button selection`,
-      },
-    };
-  }
-  if (gameType == "slots") {
-    return {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        content: `**SLOT MACHINE RULES**
-
-**Objective:**
-Spin three reels and match symbols on the center payline to win chips.
-
-**How to Play:**
-1. Place your bet using /slots <bet amount> (or use 0 for free practice spins)
-2. The slot machine spins automatically with a 4-second animation
+if (gameType == "slots") {
+  return {
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    data: {
+      embeds: [
+        {
+          title: "🎰 SLOT MACHINE RULES",
+          description: `**Objective:** Spin three reels and match symbols on the center payline to win chips.`,
+          color: 0xf39c12,
+          fields: [
+            {
+              name: "🎮 How to Play",
+              value: `1. Use **/slots <bet amount>** (or use 0 for free practice)
+2. Slot machine spins automatically (4-second animation)
 3. Reels stop one by one from left to right
-4. Your winnings are calculated based on matching symbols on the CENTER ROW ONLY
-
-**The Reels:**
-Each reel has 3 visible positions:
+4. Winnings calculated based on **CENTER ROW ONLY**`,
+              inline: false
+            },
+            {
+              name: "🎡 The Reels",
+              value: `Each reel has 3 visible positions:
 \`\`\`
-  │ 🍒 │ 💎 │ ⭐ │  ← Top row (not counted)
- ▶ 🍋 │ 🔔  7️⃣ ◀  ← CENTER PAYLINE (this is what counts!)
-  │ ❤️ │ 🎁 │ 🤑 │  ← Bottom row (not counted)
+   │ 🍒 │ 💎 │ ⭐ │  ← Top (not counted)
+▶ 🍋 │ 🔔 │ 7️⃣ ◀  ← CENTER PAYLINE ✓
+   │ ❤️ │ 🎁 │ 🤑 │  ← Bottom (not counted)
 \`\`\`
-
-**Symbol Rarity and Values:**
-From most common to rarest:
-
-• **🍒 Cherry**: Very common (40%) - 2-of-a-kind: 1.5x | 3-of-a-kind: 4x
-• **🍋 Lemon**: Common (35%) - 2-of-a-kind: 2x | 3-of-a-kind: 5x
-• **❤️ Heart**: Common (35%) - 2-of-a-kind: 2x | 3-of-a-kind: 5x
-• **💀 Skull**: Uncommon (20%) - No payout (instant loss)
-• **🔔 Bell**: Uncommon (20%) - 2-of-a-kind: 3x | 3-of-a-kind: 8x
-• **🎁 Gift**: Uncommon (20%) - 2-of-a-kind: 3x | 3-of-a-kind: 8x
-• **⭐ Star**: Rare (10%) - 2-of-a-kind: 4x | 3-of-a-kind: 12x
-• **🤑 Money Face**: Very rare (5%) - 2-of-a-kind: 5x | 3-of-a-kind: 15x
-• **7️⃣ Lucky Seven**: Extremely rare (4%) - 2-of-a-kind: 7x | 3-of-a-kind: 50x
-• **💎 Diamond**: Jackpot (1%) - 2-of-a-kind: 10x | 3-of-a-kind: 100x
-
-**Winning Combinations:**
-
-**Three-of-a-Kind (Best):**
-• All 3 symbols on the center payline match
-• Example: 🍒 | 🍒 | 🍒 = 4x your bet
-• Highest payout for each symbol
+**Only the center row determines your win!**`,
+              inline: false
+            },
+            {
+              name: "💀 Common Symbols",
+              value: `**💀 Skull** (20% chance) - No payout
+**🍒 Cherry** (40%) - 2-match: 1.5x | 3-match: 4x
+**🍋 Lemon** (35%) - 2-match: 2x | 3-match: 5x
+**❤️ Heart** (35%) - 2-match: 2x | 3-match: 5x`,
+              inline: false
+            },
+            {
+              name: "🔔 Uncommon Symbols",
+              value: `**🔔 Bell** (20%) - 2-match: 3x | 3-match: 8x
+**🎁 Gift** (20%) - 2-match: 3x | 3-match: 8x`,
+              inline: false
+            },
+            {
+              name: "⭐ Rare Symbols",
+              value: `**⭐ Star** (10%) - 2-match: 4x | 3-match: 12x
+**🤑 Money Face** (5%) - 2-match: 5x | 3-match: 15x
+**7️⃣ Lucky Seven** (4%) - 2-match: 7x | 3-match: 50x`,
+              inline: false
+            },
+            {
+              name: "💎 Jackpot Symbol",
+              value: `**💎 Diamond** (1% chance - RAREST)
+• 2-match: **10x** payout
+• 3-match: **100x** payout (JACKPOT!)`,
+              inline: false
+            },
+            {
+              name: "🏆 Winning Combinations",
+              value: `**Three-of-a-Kind (Best):**
+All 3 symbols on center payline match
+Example: 🍒 | 🍒 | 🍒 = 4x your bet
 
 **Two-of-a-Kind:**
-• Any 2 matching symbols on the center payline (in any position)
-• Example: 🍋 | 🔔 | 🍋 = 2x your bet
-• Lower payout than three-of-a-kind
+Any 2 matching symbols on center payline (any position)
+Example: 🍋 | 🔔 | 🍋 = 2x your bet
 
 **No Match:**
-• No matching symbols on center payline
-• You lose your bet
+No matching symbols = You lose your bet`,
+              inline: false
+            },
+            {
+              name: "💰 Payout Calculation",
+              value: `Your winnings = (bet amount) × (multiplier)
 
-**Payouts:**
-• Your winnings = (bet amount) x (multiplier)
-• Example 1: Bet 100 chips, get 3 Diamonds (💎) → Win 10,000 chips
-• Example 2: Bet 100 chips, get 2 Stars (⭐) → Win 400 chips
-• Example 3: Bet 100 chips, no match → Lose 100 chips
-
-**Free Play Mode:**
-• Use /slots 0 to spin without risking chips
+**Examples:**
+• Bet 100, get 3 Diamonds (💎) → Win **10,000 chips**
+• Bet 100, get 2 Stars (⭐) → Win **400 chips**
+• Bet 100, get 3 Cherries (🍒) → Win **400 chips**
+• Bet 100, no match → Lose **100 chips**`,
+              inline: false
+            },
+            {
+              name: "🆓 Free Play Mode",
+              value: `Use **/slots 0** to practice without risk:
+• No chips bet or lost
 • Results show what you would have won/lost
-• No actual chip balance changes
-• Good for practicing and seeing payout rates`,
-      },
-    };
-  }
+• Perfect for learning symbol values and payout rates`,
+              inline: false
+            },
+            {
+              name: "🎬 Animation",
+              value: `• Spins last about **4 seconds** total
+• Left reel stops first, then center, then right
+• Creates suspense as you watch for matches
+• Message updates in real-time during spin`,
+              inline: false
+            }
+          ],
+          footer: {
+            text: "Pro tip: Diamonds are rare but worth the wait! 💎"
+          }
+        }
+      ]
+    }
+  };
+}
 
   if (gameType == "stocks") {
     return {
