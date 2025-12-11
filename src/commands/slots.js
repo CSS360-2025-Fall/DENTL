@@ -1,6 +1,6 @@
 // src/commands/slots.js
 import { InteractionResponseType } from "discord-interactions";
-import { getBalance } from "../economy/db.js";
+import { getBalance, recordGameResult } from "../economy/db.js";
 import { validateAndLockBet } from "../economy/bets.js";
 import { GameConfig } from "../config/gameConfig.js";
 
@@ -161,7 +161,7 @@ export async function execute(interaction) {
         let newBal = getBalance(userId);
 
         if (bet === 0) {
-          // Free play: no balance change
+          // Free play: no balance change or stats changes
           if (tier === 0) {
             line = "Free play: no win.";
           } else {
@@ -175,11 +175,27 @@ export async function execute(interaction) {
         } else {
           if (tier === 0 || multiplier <= 0) {
             newBal = check.settle.lose();
+
+            // STATS UPDATE — loss
+            try {
+              recordGameResult(userId, "lose", bet, "slots");
+            } catch (e) {
+              console.error("recordGameResult failed (roulette lose):", e);
+            } 
+
             line = `💀 No match on the payline.\nBet: **${bet}** • New balance: **${newBal}**`;
           } else {
             // Use symbol-specific multiplier
             const mult = multiplier;
             newBal = check.settle.win(mult);
+
+            // STATS UPDATE — win
+            try {
+              recordGameResult(userId, "win", bet, "slots");
+            } catch (e) {
+              console.error("recordGameResult failed (slots win):", e);
+            }
+            
             const em = symbol?.emoji ?? "❓";
             const multDisplay = mult.toString().replace(/\.0$/, "");
             line =
