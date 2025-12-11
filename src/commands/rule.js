@@ -29,32 +29,25 @@ export async function execute(interaction) {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
         content: `**ROCK PAPER SCISSORS RULES**
-
 **Objective:**
 Choose one of three options (rock, paper, or scissors) and beat the bot's choice to win chips.
-
 **How to Play:**
 1. Place your bet using /rps hoice> <bet amount>
    - Example: /rps rock 100
 2. The bot randomly selects its choice
 3. The winner is determined by the classic rules
 4. Results are displayed immediately
-
 **Winning Rules:**
 • **Rock beats Scissors** - Rock crushes scissors
 • **Scissors beats Paper** - Scissors cut paper
 • **Paper beats Rock** - Paper covers rock
-
 **Outcomes:**
-
 **You Win (1:1 payout):**
 • Your choice beats the bot's choice
 • You receive your bet back plus an equal amount
-
 **You Lose:**
 • Bot's choice beats your choice
 • You lose your bet amount
-
 **Tie:**
 • Both you and the bot choose the same option
 • Your bet is refunded (no profit, no loss)`,
@@ -67,25 +60,20 @@ Choose one of three options (rock, paper, or scissors) and beat the bot's choice
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
         content: `**COINFLIP RULES**
-
 **Objective:**
 Predict which side of the coin will land face-up and win chips if your prediction is correct.
-
 **How to Play:**
 1. Place your bet using /coinflip <choice> <bet amount>
    - Example: /coinflip heads 100
 2. A virtual coin is flipped
 3. The coin lands on either heads or tails (50/50 chance)
 4. Results are displayed immediately
-
 **Choices:**
 • **Heads** - The "heads" side of the coin
 • **Tails** - The "tails" side of the coin
-
 **Winning:**
 • If your choice matches the coin result, you win
 • You receive your bet back plus an equal amount
-
 **Losing:**
 • If your choice does not match the coin result, you lose
 • You lose your entire bet amount`,
@@ -98,40 +86,31 @@ Predict which side of the coin will land face-up and win chips if your predictio
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
         content: `**RUSSIAN ROULETTE RULES**
-
 **Objective:**
 Test your luck by pulling the trigger on a revolver with one live round. Survive to stay in the server.
-
 **How to Play:**
 1. Use /russianroulette to play
 2. You "pull the trigger" on a virtual revolver
 3. The revolver has 6 chambers with 1 live round
 4. Results are determined immediately
-
 **Outcomes:**
-
 **You Survive (5/6 chance - 83.3%):**
 • The chamber is empty (click)
 • You remain in the server
 • You can play again if you dare
-
 **You "Die" (1/6 chance - 16.7%):**
 • The chamber has the live round (bang)
 • You are immediately kicked from the Discord server
 • This is a permanent consequence until you are re-invited
-
 **Important Warnings:**
 ⚠️ **This game has real consequences**
 ⚠️ **You will be kicked from the server if you lose**
 ⚠️ **You must be re-invited to return**
 ⚠️ **No chips or items are involved**
-
 **Server Kick:**
 • If you hit the live round, you are automatically kicked
 • No automatic re-entry after being kicked
 • Your account data (chips, inventory) may be preserved
-
-
 Think carefully before playing - the consequences are real and immediate.`,
       },
     };
