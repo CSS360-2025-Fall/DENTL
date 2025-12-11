@@ -1,6 +1,6 @@
 import { InteractionResponseType } from 'discord-interactions';
 import { isAdmin, DiscordRequest } from "../core/utils.js";
-import { getBalance, addBalance } from "../economy/db.js"; // Changed: addBalance instead of validateAndLockBet
+import { getBalance, addBalance, recordGameResult } from "../economy/db.js"; // Changed: addBalance instead of validateAndLockBet
 
 // Poker Config
 const BIG_BLIND = 100;
@@ -612,6 +612,14 @@ async function completeBettingRound(session) {
     // Award pot to last remaining player
     const winner = activePlayers[0];
     winner.stack += hand.pot;
+
+    // STATS: uncontested win
+    try {
+      recordGameResult(winner.userId, "win", hand.pot, "poker");
+    } catch (e) {
+      console.error("Poker stats error (fold pot win):", e);
+    }
+
     await sendThreadMessage(
       session.threadId,
       `**${winner.username} wins ${hand.pot} chips (all others folded)!**`
@@ -700,17 +708,63 @@ async function showdown(session) {
   if (winners.length > 1) {
     const splitPot = Math.floor(hand.pot / winners.length);
     resultMessage += `\n**Split pot!** ${winners.map(w => w.username).join(", ")} each win ${splitPot} chips!`;
+
+    // WINNERS — update stats
     winners.forEach(winner => {
       winner.stack += splitPot;
+
+      try {
+        recordGameResult(winner.userId, "win", splitPot, "poker");
+      } catch (e) {
+        console.error("Poker stats error (split win):", e);
+      }
     });
+
+    // LOSERS — record losses
+    playerHands.forEach(({ player }) => {
+      if (!winners.includes(player)) {
+        const amountLost = hand.bets[player.userId] || 0;
+
+        try {
+          recordGameResult(player.userId, "lose", amountLost, "poker");
+        } catch (e) {
+          console.error("Poker stats error (split loss):", e);
+        }
+      }
+    });
+
+    await sendThreadMessage(session.threadId, resultMessage);
+    await endHand(session);
+    return;
+
   } else {
     const winner = winners[0];
     resultMessage += `\n**${winner.username} wins ${hand.pot} chips with ${getHandName(bestScore)}!**`;
     winner.stack += hand.pot;
-  }
 
+    // Stats: Winner
+    try {
+      recordGameResult(winner.userId, "win", hand.pot, "poker");
+    } catch (e) {
+      console.error("Poker stats error (showdown win):", e);
+    }
+
+    // Stats: Losers
+    playerHands.forEach(({ player }) => {
+      if (player.userId !== winner.userId) {
+        const amountLost = hand.bets[player.userId] || 0;
+
+        try {
+          recordGameResult(player.userId, "lose", amountLost, "poker");
+        } catch (e) {
+          console.error("Poker stats error (showdown loss):", e);
+        }
+      }
+    });
+  }
   await sendThreadMessage(session.threadId, resultMessage);
   await endHand(session, winners[0].userId);
+  return;
 }
 
 // ============ NEW: Check if betting round is complete ============
