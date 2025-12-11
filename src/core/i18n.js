@@ -10,7 +10,7 @@ try {
 }
 
 function saveLang() {
-  fs.mkdirSync("./data", { recursive: true });
+  fs.mkdirSync("../data", { recursive: true });
   fs.writeFileSync(LANG_FILE, JSON.stringify(userLang, null, 2));
 }
 
