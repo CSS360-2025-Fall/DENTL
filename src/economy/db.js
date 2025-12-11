@@ -9,7 +9,7 @@ const DB_PATH = path.join(__dirname, "..", "data", "casino.sqlite");
 console.log("🗄️ Using DB at:", DB_PATH);
 
 const db = new Database(DB_PATH);
-db.pragma("journal_mode = WAL");
+db.pragma("journal_mode = DELETE");
 
 // --- create schema BEFORE any prepare() ---
 function initSchema() {
@@ -265,7 +265,8 @@ export function ensureStats(userId) {
     .prepare("SELECT user_id FROM stats WHERE user_id = ?")
     .get(userId);
   if (!row) {
-    db.prepare(`
+    db.prepare(
+      `
       INSERT INTO stats (
         user_id,
         games_played,
@@ -278,7 +279,8 @@ export function ensureStats(userId) {
         last_game_type
       )
       VALUES (?, 0, 0, 0, 0, 0, 0, strftime('%s','now'), NULL)
-    `).run(userId);
+    `
+    ).run(userId);
   }
 }
 
@@ -294,7 +296,12 @@ export function recordGameResult(userId, outcome, bet, gameType) {
   const cleanBet = Math.max(0, Number(bet) || 0);
 
   // 🔍 DEBUG LOG
-  console.log("[recordGameResult]", { userId, outcome, bet: cleanBet, gameType });
+  console.log("[recordGameResult]", {
+    userId,
+    outcome,
+    bet: cleanBet,
+    gameType,
+  });
 
   const current = db
     .prepare("SELECT biggest_win, biggest_loss FROM stats WHERE user_id = ?")
@@ -314,7 +321,8 @@ export function recordGameResult(userId, outcome, bet, gameType) {
   const lossesInc = outcome === "lose" ? 1 : 0;
   const tiesInc = outcome === "tie" ? 1 : 0;
 
-  db.prepare(`
+  db.prepare(
+    `
     UPDATE stats
     SET
       games_played   = games_played + 1,
@@ -326,22 +334,17 @@ export function recordGameResult(userId, outcome, bet, gameType) {
       last_played_at = strftime('%s','now'),
       last_game_type = ?
     WHERE user_id = ?
-  `).run(
-    winsInc,
-    lossesInc,
-    tiesInc,
-    biggestWin,
-    biggestLoss,
-    gameType,
-    userId
-  );
+  `
+  ).run(winsInc, lossesInc, tiesInc, biggestWin, biggestLoss, gameType, userId);
 }
 
 /**
  * Get full stats for a given user.
  */
 export function getStats(userId) {
-  const row = db.prepare(`
+  const row = db
+    .prepare(
+      `
     SELECT
       user_id,
       games_played,
@@ -354,7 +357,9 @@ export function getStats(userId) {
       last_game_type
     FROM stats
     WHERE user_id = ?
-  `).get(userId);
+  `
+    )
+    .get(userId);
 
   if (!row) {
     return {

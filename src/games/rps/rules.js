@@ -1,3 +1,4 @@
+export const RPS_CHOICES = ["rock", "paper", "scissors"];
 export function botPick() {
   return RPS_CHOICES[Math.floor(Math.random() * RPS_CHOICES.length)];
 }
@@ -20,3 +21,4 @@ export function formatResult({ userId, player, bot, result }) {
       ? "😐 It's a **TIE.**"
       : "💀 You **LOSE.**";
   return `${head}\n<@${userId}>: **${player}** ${e[player]}  |  Bot: **${bot}** ${e[bot]}`;
+}
