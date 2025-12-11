@@ -1,6 +1,6 @@
 import { InteractionResponseType } from "discord-interactions";
 import { validateBet } from "../economy/bets.js";
-import { getBalance, addBalance } from "../economy/db.js";
+import { getBalance, recordGameResult, addBalance } from "../economy/db.js";
 
 /**
 ** Interaction Flow **
@@ -384,6 +384,13 @@ async function executeGame(session, userId, betType, selection, interaction) {
     // create balance logic here
     addBalance(userId, winAmount);
 
+    // STATS UPDATE — win
+    try {
+      recordGameResult(userId, "win", session.bet, "roulette");
+    } catch (e) {
+      console.error("recordGameResult failed (roulette win):", e);
+    }
+
     response = `🎰 **Wheel: ${winningNumber}**\n\n✅ **YOU WIN!**\n${betType.toUpperCase()} (${payout}:1)\nWinnings: ${winAmount} chips`;
   } else {
     // create balance logic here
@@ -392,6 +399,14 @@ async function executeGame(session, userId, betType, selection, interaction) {
     response = `🎰 **Wheel: ${winningNumber}**\n\n❌ **You Lost**\nYour bet: ${betNumbers.join(
       ", "
     )}\nLost: ${session.bet} chips`;
+    // STATS UPDATE — loss
+    try {
+      recordGameResult(userId, "lose", session.bet, "roulette");
+    } catch (e) {
+      console.error("recordGameResult failed (roulette lose):", e);
+    }
+
+    response = `🎰 **Wheel: ${winningNumber}**\n\n❌ **You Lost**\nYour bet: ${betNumbers.join(', ')}\nLost: ${session.bet} chips`;
   }
 
   sessions.delete(userId);
